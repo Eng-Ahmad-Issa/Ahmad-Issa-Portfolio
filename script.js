@@ -1,184 +1,244 @@
-addEventListener("DOMContentLoaded", (event) => {
-  // active hamburger menu
-  let menuIcon = document.querySelector(".menu-icon");
-  let navlist = document.querySelector(".navlist");
-  menuIcon.addEventListener("click", () => {
-    menuIcon.classList.toggle("active");
-    navlist.classList.toggle("active");
-    document.body.classList.toggle("open");
-  });
-
-  // remove navlist
-  navlist.addEventListener("click", () => {
-    navlist.classList.remove("active");
-    menuIcon.classList.remove("active");
-    document.body.classList.remove("open");
-  });
-
-  // rotate text js code
-  let text = document.querySelector(".text p");
-
-  text.innerHTML = text.innerHTML
-    .split("")
-    .map((char, i) => `<b style="transform:rotate(${i * 6.3}deg")>${char}</b>`)
-    .join("");
-
-  // switch between about buttons
-
-  const buttons = document.querySelectorAll(".about-btn button");
-  const contents = document.querySelectorAll(".content");
-
-  buttons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      contents.forEach((content) => (content.style.display = "none"));
-      contents[index].style.display = "block";
-      buttons.forEach((btn) => btn.classList.remove("active"));
-      button.classList.add("active");
-    });
-  });
-
-  // Portfolio filter
-  var mixer = mixitup(".portfolio-gallery", {
-    selectors: {
-      target: ".portfolio-box",
-    },
-    animation: {
-      duration: 500,
-      nudge: true,
-      easing: "ease",
-      effects: "fade translateZ(-100px) scale(0.8)"
-    },
-  });
-
-  // Initialize SwiperJS
-  var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 1,
-    spaceBetween: 30,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    },
-    breakpoints: {
-      576: {
-        slidesPerView: 2,
-        spaceBetween: 10,
-      },
-      1200: {
-        slidesPerView: 3,
-        spaceBetween: 20,
-      },
-    },
-  });
-
-
-  //   skill Progress bar
-
-  const first_skill = document.querySelector(".skill:first-child");
-  const sk_counters = document.querySelectorAll(".counter span");
-  const progress_bars = document.querySelectorAll(".skills svg circle");
-
-  window.addEventListener("scroll", () => {
-    if (!skillsPlayed) skillsCounter();
-  });
-
-  function hasReached(el) {
-    let topPosition = el.getBoundingClientRect().top;
-    if (window.innerHeight >= topPosition + el.offsetHeight) return true;
-    return false;
-  }
-
-  function updateCount(num, maxNum) {
-    let currentNum = +num.innerText;
-
-    if (currentNum < maxNum) {
-      num.innerText = currentNum + 1;
-      setTimeout(() => {
-        updateCount(num, maxNum);
-      }, 12);
-    }
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  const menuIcon = document.querySelector(".menu-icon");
+  const navlist = document.querySelector(".navlist");
+  const aboutButtons = document.querySelectorAll(".about-btn button");
+  const aboutContents = document.querySelectorAll(".content");
+  const text = document.querySelector(".text p");
+  const firstSkill = document.querySelector(".skill:first-child");
+  const skillCounters = document.querySelectorAll(".counter span");
+  const progressBars = document.querySelectorAll(".skills svg circle");
+  const scrollProgress = document.getElementById("progress");
+  const menuLinks = document.querySelectorAll("header ul li a");
+  const sections = document.querySelectorAll("section");
+  const documentElement = document.documentElement;
 
   let skillsPlayed = false;
+  let scrollTicking = false;
 
-  function skillsCounter() {
-    if (!hasReached(first_skill)) return;
+  const setupMenu = () => {
+    if (!menuIcon || !navlist) return;
+
+    menuIcon.addEventListener("click", () => {
+      menuIcon.classList.toggle("active");
+      navlist.classList.toggle("active");
+      document.body.classList.toggle("open");
+    });
+
+    navlist.addEventListener("click", () => {
+      navlist.classList.remove("active");
+      menuIcon.classList.remove("active");
+      document.body.classList.remove("open");
+    });
+  };
+
+  const setupRotatingText = () => {
+    if (!text) return;
+
+    text.innerHTML = text.textContent
+      .split("")
+      .map((char, i) => `<b style="transform: rotate(${i * 6.3}deg)">${char}</b>`)
+      .join("");
+  };
+
+  const setupAboutTabs = () => {
+    if (!aboutButtons.length || !aboutContents.length) return;
+
+    aboutButtons.forEach((button, index) => {
+      button.addEventListener("click", () => {
+        aboutContents.forEach((content) => {
+          content.style.display = "none";
+        });
+
+        if (aboutContents[index]) {
+          aboutContents[index].style.display = "block";
+        }
+
+        aboutButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+      });
+    });
+  };
+
+  const setupPortfolioFilter = () => {
+    if (typeof mixitup !== "function") return;
+
+    mixitup(".portfolio-gallery", {
+      selectors: {
+        target: ".portfolio-box",
+      },
+      animation: {
+        duration: 500,
+        nudge: true,
+        easing: "ease",
+        effects: "fade translateZ(-100px) scale(0.8)",
+      },
+    });
+  };
+
+  const setupSwiper = () => {
+    if (typeof Swiper !== "function") return;
+
+    new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      breakpoints: {
+        576: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
+        1200: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+      },
+    });
+  };
+
+  const hasReached = (el) => {
+    if (!el) return false;
+    const topPosition = el.getBoundingClientRect().top;
+    return window.innerHeight >= topPosition + el.offsetHeight;
+  };
+
+  const updateCount = (counter, maxNum) => {
+    const currentNum = Number(counter.innerText);
+
+    if (currentNum < maxNum) {
+      counter.innerText = String(currentNum + 1);
+      setTimeout(() => {
+        updateCount(counter, maxNum);
+      }, 12);
+    }
+  };
+
+  const runSkillsCounter = () => {
+    if (skillsPlayed || !hasReached(firstSkill)) return;
+
     skillsPlayed = true;
-    sk_counters.forEach((counter, i) => {
-      let target = +counter.dataset.target;
-      let strokeValue = 465 - 465 * (target / 100);
 
-      progress_bars[i].style.setProperty("--target", strokeValue);
+    skillCounters.forEach((counter, i) => {
+      const target = Number(counter.dataset.target);
+      const strokeValue = 465 - 465 * (target / 100);
+
+      if (progressBars[i]) {
+        progressBars[i].style.setProperty("--target", strokeValue);
+        progressBars[i].style.animation = "progress 2s ease-in-out forwards";
+      }
 
       setTimeout(() => {
         updateCount(counter, target);
       }, 400);
     });
-
-    progress_bars.forEach(
-      (p) => (p.style.animation = "progress 2s ease-in-out forwards")
-    );
-  }
-
-  // side progress bar
-
-  let calcScrollValue = () => {
-    let scrollProgress = document.getElementById("progress");
-    let pos = document.documentElement.scrollTop;
-
-    let calcHeight =
-      document.documentElement.scrollHeight -
-      document.documentElement.clientHeight;
-    let scrollValue = Math.round((pos * 100) / calcHeight);
-
-    if (pos > 100) {
-      scrollProgress.style.display = "grid";
-    } else {
-      scrollProgress.style.display = "none";
-    }
-
-    scrollProgress.addEventListener("click", () => {
-      document.documentElement.scrollTop = 0;
-    });
-
-    scrollProgress.style.background = `conic-gradient(#fff ${scrollValue}%,#e6006d ${scrollValue}%)`;
   };
 
-  window.onscroll = calcScrollValue;
-  window.onload = calcScrollValue;
+  const updateScrollProgress = () => {
+    if (!scrollProgress) return;
 
-  // active menu
+    const pos = documentElement.scrollTop;
+    const calcHeight =
+      documentElement.scrollHeight - documentElement.clientHeight;
+    const scrollValue =
+      calcHeight > 0 ? Math.round((pos * 100) / calcHeight) : 0;
 
-  let menuLi = document.querySelectorAll("header ul li a");
-  let section = document.querySelectorAll("section");
+    scrollProgress.style.display = pos > 100 ? "grid" : "none";
+    scrollProgress.style.background = `conic-gradient(#fff ${scrollValue}%, #e6006d ${scrollValue}%)`;
+  };
 
-  function activeMenu() {
-    let len = section.length;
-    while (--len && window.scrollY + 97 < section[len].offsetTop) { }
-    menuLi.forEach((sec) => sec.classList.remove("active"));
-    menuLi[len].classList.add("active");
-  }
-  activeMenu();
-  window.addEventListener("scroll", activeMenu);
+  const updateActiveMenu = () => {
+    if (!menuLinks.length || !sections.length) return;
 
-  // scroll reveal
+    let len = sections.length;
+    while (--len && window.scrollY + 97 < sections[len].offsetTop) {
+      // intentional empty loop
+    }
 
-  ScrollReveal({
-    distance: "90px",
-    duration: 2000,
-    delay: 200,
-    // reset: true ,
-  });
+    menuLinks.forEach((link) => link.classList.remove("active"));
 
-  ScrollReveal().reveal(".hero-info,.main-text,.proposal,.heading", {
-    origin: "top",
-  });
-  ScrollReveal().reveal(".about-img,.fillter-buttons,.contact-info", {
-    origin: "left",
-  });
-  ScrollReveal().reveal(".about-content,.skills", { origin: "right" });
+    if (menuLinks[len]) {
+      menuLinks[len].classList.add("active");
+    }
+  };
 
+  const onScroll = () => {
+    if (scrollTicking) return;
+
+    scrollTicking = true;
+    window.requestAnimationFrame(() => {
+      runSkillsCounter();
+      updateScrollProgress();
+      updateActiveMenu();
+      scrollTicking = false;
+    });
+  };
+
+  const setupScrollToTop = () => {
+    if (!scrollProgress) return;
+
+    scrollProgress.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  };
+
+  const setupSkillsObserver = () => {
+    if (!firstSkill || skillsPlayed || typeof IntersectionObserver !== "function") {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          runSkillsCounter();
+          observer.disconnect();
+        });
+      },
+      {
+        root: null,
+        threshold: 0.2,
+      }
+    );
+
+    observer.observe(firstSkill);
+  };
+
+  const setupScrollReveal = () => {
+    if (typeof ScrollReveal !== "function") return;
+
+    ScrollReveal({
+      distance: "90px",
+      duration: 2000,
+      delay: 200,
+    });
+
+    ScrollReveal().reveal(".hero-info,.main-text,.proposal,.heading", {
+      origin: "top",
+    });
+    ScrollReveal().reveal(".about-img,.fillter-buttons,.contact-info", {
+      origin: "left",
+    });
+    ScrollReveal().reveal(".about-content,.skills", { origin: "right" });
+  };
+
+  setupMenu();
+  setupRotatingText();
+  setupAboutTabs();
+  setupPortfolioFilter();
+  setupSwiper();
+  setupScrollToTop();
+  setupSkillsObserver();
+  setupScrollReveal();
+
+  runSkillsCounter();
+  updateScrollProgress();
+  updateActiveMenu();
+
+  window.addEventListener("scroll", onScroll, { passive: true });
 });
