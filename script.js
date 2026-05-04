@@ -67,10 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
         target: ".portfolio-box",
       },
       animation: {
-        duration: 500,
-        nudge: true,
-        easing: "ease",
-        effects: "fade translateZ(-100px) scale(0.8)",
+        duration: 250,
+        nudge: false,
+        easing: "ease-out",
+        effects: "fade",
       },
     });
   };
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ScrollReveal().reveal(".about-img,.fillter-buttons,.contact-info", {
       origin: "left",
     });
-    ScrollReveal().reveal(".about-content,.skills", { origin: "right" });
+    ScrollReveal().reveal(".about-content,.skills,.experience", { origin: "right" });
   };
 
   setupMenu();

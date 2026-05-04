@@ -6,8 +6,6 @@
   box-sizing: border-box;
   list-style: none;
   scroll-behavior: smooth;
-  transition: all ease 0.9 seconds;
-
 }
 
 :root {
@@ -27,6 +25,13 @@
   --gradient-white-bg2: linear-gradient(98deg, #606060 0%, #3a3a3a 100%);
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 a {
   text-decoration: none;
   color: #e0e0e0;
@@ -36,7 +41,6 @@ body {
   font-family: "Poppins", sans-serif;
   background: var(--bg-color);
   color: var(--font-color);
-  overflow-x: hidden;
 }
 
 header {
@@ -179,14 +183,15 @@ section {
   height: 100%;
   width: 100%;
   display: flex;
-  grid-template-columns: repeat(2, 1fr);
   align-items: center;
-  grid-gap: 4em;
+  justify-content: space-between;
+  gap: clamp(5rem, 8vw, 10rem);
   background: var(--gradient-white-bg2);
 }
 
 .hero-info {
   margin-top: 3rem;
+  max-width: 650px;
 }
 
 .hero-info h3 {
@@ -201,7 +206,7 @@ section {
 }
 
 .text-animate {
-  width: 22.8rem;
+  width: min(100%, 34rem);
   position: relative;
 }
 
@@ -216,7 +221,7 @@ section {
   background-clip: text;
   background-position: 0 0;
   transition: 0.6s;
-  letter-spacing: 2px;
+  letter-spacing: 0;
   animation: moveText 3s linear infinite;
   animation-delay: 2s;
   line-height: 40px;
@@ -321,18 +326,26 @@ section {
 
 .img-hero {
   position: relative;
+  width: min(450px, 88vw);
+  min-height: 470px;
+  flex: 0 0 min(450px, 88vw);
+  margin-left: clamp(1.5rem, 4vw, 5rem);
   animation: floatImage 4s ease-in-out infinite;
   animation-delay: 3s;
 }
 
 .img-hero img {
   position: relative;
-  width: 390px;
-  height: auto;
+  display: block;
+  width: min(380px, 78vw);
+  height: min(380px, 78vw);
+  object-fit: cover;
+  object-position: center 28%;
   z-index: 10;
-  border-radius: 0 0 1000px 1000px;
-  top: 45px;
-  left: 5px;
+  border-radius: 50%;
+  top: 82px;
+  left: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
 }
 
 .rotate-text {
@@ -408,6 +421,7 @@ section {
 
 .about-content {
   padding: 3rem 0;
+  width: 100%;
 }
 
 .about-content h2 {
@@ -435,6 +449,7 @@ section {
   justify-content: start;
   gap: 1rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .about-btn button,
@@ -463,18 +478,17 @@ section {
 }
 
 .content-btn {
-  position: relative;
-  height: 400px;
-  overflow: hidden;
+  position: static;
+  min-height: 430px;
+  height: auto;
+  overflow: visible;
   margin-bottom: 20px;
 }
 
 .content {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: static;
   width: 100%;
-  height: 100%;
+  height: auto;
   display: none;
 }
 
@@ -501,6 +515,88 @@ section {
 
 .cvContent {
   margin-top: 1.5rem;
+}
+
+/* ==================== Experience section css code ============================ */
+.experience {
+  background: var(--gradient-white-bg2);
+}
+
+.timeline {
+  max-width: 980px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 16px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.timeline-marker {
+  width: 16px;
+  height: 16px;
+  margin-top: 1rem;
+  border-radius: 50%;
+  background: var(--gradient-color-bg);
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.08);
+  z-index: 1;
+}
+
+.timeline-content,
+.skill-card {
+  background: rgba(18, 18, 18, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.timeline-content h3,
+.skill-card h3 {
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+
+.timeline-content p,
+.skill-card p {
+  color: var(--font-color);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.timeline-meta {
+  color: #cfcfcf !important;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.project-tags span {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.6rem;
 }
 
 /* ==================== Services section css code ============================ */
@@ -640,8 +736,10 @@ button.mixitup-control-active {
 }
 
 .portfolio-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
   gap: 1rem;
 }
 
@@ -649,6 +747,7 @@ button.mixitup-control-active {
   display: block;
   width: 100%;
   height: 160px;
+  object-fit: cover;
   transition: 0.3s;
 }
 
@@ -656,12 +755,13 @@ button.mixitup-control-active {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex: 0 1 clamp(330px, calc((100% - 2rem) / 3), 410px);
   gap: 0.5rem;
   padding: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
   background: var(--gradient-white-bg2);
-  border-radius: 10px;
-  transition: all 0.3s ease;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .portfolio-content {
@@ -676,7 +776,23 @@ button.mixitup-control-active {
   overflow: hidden;
 }
 
-.portfolio-box:hover img {
+.portfolio-icon {
+  width: 100%;
+  min-width: 130px;
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.portfolio-icon i {
+  color: #fff;
+  font-size: 3rem;
+}
+
+.portfolio-box:hover .portfolio-img img {
   transform: scale(1.1);
   transition: all ease 0.9 seconds;
 }
@@ -823,7 +939,7 @@ h2.heading {
   background: var(--gradient-white-bg2);
   box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .contact-info input,
@@ -879,6 +995,18 @@ form .btn {
 
 .skillBox .main-text {
   margin-bottom: 1rem;
+}
+
+.skill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.skill-grid .skill-card {
+  flex: 0 1 clamp(240px, calc((100% - 5rem) / 6), 280px);
 }
 
 .skill-wrap {
@@ -1169,8 +1297,49 @@ footer {
     flex-direction: column-reverse;
   }
 
-  .portfolio-box {
-    transition: transform 0.5s ease, opacity 0.5s ease;
+  .home {
+    width: 100%;
+    max-width: 100vw;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    min-height: 100svh;
+    padding-top: 86px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero-info {
+    width: min(100%, 680px);
+    margin: 0 auto;
+  }
+
+  .img-hero {
+    width: 100%;
+    max-width: 430px;
+    min-height: min(430px, 90vw);
+    flex: 0 0 auto;
+    margin: 1rem auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .img-hero img {
+    width: min(340px, 78vw);
+    height: min(340px, 78vw);
+    top: 0;
+    left: auto;
+  }
+
+  .rotate-text {
+    display: none;
+  }
+
+  .btn-box,
+  .social-media {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .about,
@@ -1187,35 +1356,84 @@ footer {
     height: 100%;
   }
 
-  .portfolio-gallery {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-
   .img-hero {
     margin-top: 3rem;
+  }
+
+  .timeline-item {
+    grid-template-columns: 32px 1fr;
   }
 }
 
 @media (max-width: 768px) {
+  header {
+    width: 100%;
+    max-width: 100vw;
+    padding: 12px 4%;
+  }
+
+  header .logo {
+    font-size: 1.35rem;
+  }
+
+  .logo-image {
+    width: 36px;
+    margin-right: 8px;
+  }
+
+  .menu-icon {
+    width: 28px;
+    height: 22px;
+    background: linear-gradient(#fff, #fff) center / 100% 3px no-repeat;
+  }
+
   .proposal {
     display: none;
   }
 
-  .menu-icon .bar,
   .menu-icon::after,
   .menu-icon::before {
     display: block;
+    position: absolute;
+    left: 0;
+    height: 3px;
+    margin: 0;
+    background: #fff;
+  }
+
+  .menu-icon::before {
+    top: 0;
+  }
+
+  .menu-icon::after {
+    bottom: 0;
+  }
+
+  .menu-icon.active {
+    background: transparent;
+  }
+
+  .menu-icon.active::before {
+    top: 9px;
+    transform: rotate(45deg);
+  }
+
+  .menu-icon.active::after {
+    bottom: 10px;
+    transform: rotate(-45deg);
   }
 
   ul.navlist {
-    position: absolute;
+    position: fixed;
     top: -1000px;
-    transition: all 0.3s ease;
-    width: 100%;
+    transition: top 0.3s ease;
+    width: 100vw;
     text-align: center;
     display: block;
     background: var(--gradient-white-bg);
     left: 0;
+    right: 0;
+    z-index: 99;
     border-top: 2px solid rgba(248, 202, 202, 0.7);
   }
 
@@ -1225,7 +1443,7 @@ footer {
   }
 
   .navlist.active {
-    top: 100%;
+    top: 64px;
   }
 
   .overlay {
@@ -1252,7 +1470,9 @@ footer {
   }
 
   .home {
-    grid-gap: 0;
+    gap: 1rem;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .fillter-buttons button {
@@ -1266,8 +1486,13 @@ footer {
     font-size: 80%;
   }
 
+  header {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
   section {
-    padding: 50px 3%;
+    padding: 50px 5%;
   }
 
   .contact-info form .input-box {
@@ -1278,16 +1503,16 @@ footer {
     width: 100%;
   }
 
-  .rotate-text {
-    display: none;
-  }
-
   .img-hero img {
-    width: 100%;
+    width: min(340px, 88vw);
+    height: min(340px, 88vw);
+    top: 0;
+    left: auto;
+    transform: none;
   }
 
   .text-animate {
-    width: 23.8rem;
+    width: 100%;
   }
 
   .btn-box {
@@ -1303,5 +1528,10 @@ footer {
   .fillter-buttons button {
     width: 100%;
     padding: 13px;
+  }
+
+  .portfolio-box,
+  .skill-grid .skill-card {
+    flex-basis: 100%;
   }
 }
