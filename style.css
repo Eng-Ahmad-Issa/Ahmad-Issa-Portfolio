@@ -18,6 +18,11 @@
       rgb(236, 86, 159) 0%,
       rgb(213, 75, 208) 51%,
       rgb(149, 96, 199) 100%);
+  --gradient-text-bg: linear-gradient(90deg,
+      rgba(236, 86, 159, 0.95) 0%,
+      rgba(213, 75, 208, 0.98) 52%,
+      rgba(149, 96, 199, 0.95) 100%);
+  --text-outline-color: rgba(232, 225, 239, 0.36);
   --main-color: rgb(213, 75, 208);
   --font-color: #e0e0e0;
   --hover-box-shadow: rgba(255, 255, 255, 0.19) 0px 10px 20px,
@@ -211,20 +216,35 @@ section {
 }
 
 .text-animate h2 {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
   color: transparent;
-  -webkit-text-stroke: 0.1vw #e0e0e0;
-  background: var(--gradient-color-bg);
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: clamp(0.35px, 0.045em, 0.9px) var(--text-outline-color);
+  background: var(--gradient-text-bg);
   background-repeat: no-repeat;
   background-clip: text;
-  background-position: 0 0;
-  transition: 0.6s;
+  -webkit-background-clip: text;
+  background-position: left center;
+  background-size: 0% 100%;
+  text-shadow: 0 0 18px rgba(213, 75, 208, 0.18);
+  transition: text-shadow 0.3s ease;
   letter-spacing: 0;
-  animation: moveText 3s linear infinite;
-  animation-delay: 2s;
+  animation: moveText 4.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  animation-delay: 0.6s;
   line-height: 40px;
+}
+
+.text-animate h2:nth-child(2) {
+  animation-delay: 0.95s;
+}
+
+.text-animate h2:nth-child(3) {
+  animation-delay: 1.3s;
 }
 
 .contact-info form input,
@@ -1203,14 +1223,21 @@ footer {
 @keyframes moveText {
 
   0%,
-  10%,
+  12%,
   100% {
-    background-position: -24rem 0;
+    background-size: 0% 100%;
+    text-shadow: 0 0 10px rgba(213, 75, 208, 0.08);
   }
 
-  65%,
-  85% {
-    background-position: 0rem 0;
+  48%,
+  78% {
+    background-size: 100% 100%;
+    text-shadow: 0 0 18px rgba(213, 75, 208, 0.2);
+  }
+
+  90% {
+    background-size: 100% 100%;
+    text-shadow: 0 0 12px rgba(213, 75, 208, 0.12);
   }
 }
 
@@ -1312,6 +1339,11 @@ footer {
   .hero-info {
     width: min(100%, 680px);
     margin: 0 auto;
+  }
+
+  .text-animate h2 {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .img-hero {
@@ -1513,6 +1545,11 @@ footer {
 
   .text-animate {
     width: 100%;
+  }
+
+  .text-animate h2 {
+    font-size: 1.65rem;
+    line-height: 1.45;
   }
 
   .btn-box {
