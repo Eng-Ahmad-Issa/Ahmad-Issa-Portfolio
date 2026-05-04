@@ -49,7 +49,7 @@
       <p>
         Computer Engineering graduate working as a GIS Developer at gistec in
         Amman. I build and support Web GIS solutions using ArcGIS Experience
-        Builder, ArcGIS Online, ArcGIS Pro, JavaScript, TypeScript, React, and
+        Builder, ArcGIS Online, ArcGIS Enterprise, JavaScript, TypeScript, React, and
         REST APIs.
         <br />
         <b>I focus on reliable spatial applications, custom widgets, data-driven
@@ -114,7 +114,7 @@
           <div class="text-box">
             <p>GIS Development</p>
             <span>ArcGIS Experience Builder Developer Edition, ArcGIS Maps SDK for JavaScript, ArcGIS Online,
-              ArcGIS Pro, Web Maps, Feature Layers, and ArcGIS REST services.</span>
+              ArcGIS Enterprise, Web Maps, Feature Layers, and ArcGIS REST services.</span>
           </div>
           <div class="text-box">
             <p>Frontend Engineering</p>
@@ -131,7 +131,7 @@
             </span>
           </div>
           <div class="text-box">
-            <p>Data & Integration</p>
+            <p>Data &amp; Integration</p>
             <span>
               REST APIs, ArcGIS services, SQL Server, PostgreSQL, database connectivity, data stores, and map-driven
               integration workflows.
@@ -145,7 +145,7 @@
             </span>
           </div>
           <div class="text-box">
-            <p>Documentation & Delivery</p>
+            <p>Documentation &amp; Delivery</p>
             <span>
               Technical documentation, knowledge-base authoring, client-facing troubleshooting, operational reporting,
               and cross-functional collaboration.
@@ -187,7 +187,7 @@
           </div>
 
           <div class="text-box">
-            <p>Data Science & Networking - Cisco Networking Academy</p>
+            <p>Data Science &amp; Networking - Cisco Networking Academy</p>
             <span>
               Foundational data analysis, visualization, IP addressing, subnetting, and network troubleshooting.
             </span>
@@ -233,12 +233,13 @@
           <h3>Technical Support Analyst</h3>
           <p class="timeline-meta">gistec | Sep 2025 - Apr 2026 | Amman, Jordan</p>
           <p>
-            Supported Esri Support Center workflows by troubleshooting ArcGIS Online, ArcGIS Pro, platform access,
+            Supported Esri Support Center workflows by troubleshooting ArcGIS Online, ArcGIS Enterprise, platform
+            access,
             service behavior, logs, data issues, and customer incidents.
           </p>
           <div class="project-tags">
             <span>ArcGIS Online</span>
-            <span>ArcGIS Pro</span>
+            <span>ArcGIS Enterprise</span>
             <span>RCA</span>
             <span>SLA Support</span>
           </div>
@@ -284,8 +285,8 @@
 
   <section class="portfolio" id="portfolio">
     <div class="main-text">
-      <h2 class="heading">My Projects</h2>
-      <span>GIS, support, web, and applied research work</span>
+      <h2 class="heading">Selected Projects</h2>
+      <span>GIS, support, web, and applied research work with confidential client details removed</span>
     </div>
 
     <!-- Filter Buttons -->
@@ -305,7 +306,7 @@
           <p>
             ArcGIS Experience Builder dashboards and widgets for map-driven public-sector workflows.
           </p>
-          <a href="project4.html" class="readMore">Explore More</a>
+          <button type="button" class="readMore" data-project-modal="government-gis">View More</button>
         </div>
         <div class="portfolio-icon" aria-hidden="true">
           <i class="bx bx-map-alt"></i>
@@ -318,7 +319,7 @@
           <p>
             Reusable React/TypeScript widgets for filtering, map interaction, and ArcGIS service integration.
           </p>
-          <a href="project7.html" class="readMore">Explore More</a>
+          <button type="button" class="readMore" data-project-modal="experience-builder">View More</button>
         </div>
         <div class="portfolio-icon" aria-hidden="true">
           <i class="bx bx-code-curly"></i>
@@ -327,11 +328,11 @@
 
       <div class="portfolio-box mix support">
         <div class="portfolio-content">
-          <h3>Esri Support & Platform Diagnostics</h3>
+          <h3>Esri Support &amp; Platform Diagnostics</h3>
           <p>
             Case analysis, ArcGIS troubleshooting, access control checks, log review, and RCA documentation.
           </p>
-          <a href="project8.html" class="readMore">Explore More</a>
+          <button type="button" class="readMore" data-project-modal="esri-support">View More</button>
         </div>
         <div class="portfolio-icon" aria-hidden="true">
           <i class="bx bx-support"></i>
@@ -344,7 +345,7 @@
           <p>
             IoT and machine learning concept for urban planning, environmental sensing, and decision support.
           </p>
-          <a href="project3.html" class="readMore">Explore More</a>
+          <button type="button" class="readMore" data-project-modal="smart-city">View More</button>
         </div>
         <div class="portfolio-img">
           <img src="img/portfolio/project3.webp" alt="Smart city optimization platform" loading="lazy" decoding="async"
@@ -358,7 +359,7 @@
           <p>
             Embedded navigation and computer vision prototype for line following and obstacle avoidance.
           </p>
-          <a href="project2.html" class="readMore">Explore More</a>
+          <button type="button" class="readMore" data-project-modal="autonomous-car">View More</button>
         </div>
         <div class="portfolio-img">
           <img src="img/portfolio/project2.webp" alt="Autonomous smart car robot" loading="lazy" decoding="async"
@@ -372,7 +373,7 @@
           <p>
             Static HTML, CSS, and JavaScript portfolio refined to present GIS development and Esri experience.
           </p>
-          <a href="project6.html" class="readMore">Explore More</a>
+          <button type="button" class="readMore" data-project-modal="portfolio-site">View More</button>
         </div>
         <div class="portfolio-img">
           <img src="img/portfolio/project6.webp" alt="Project6" loading="lazy" decoding="async"
@@ -381,6 +382,21 @@
       </div>
     </div>
   </section>
+
+  <div class="project-modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"
+    hidden>
+    <div class="project-modal-backdrop" data-project-modal-close></div>
+    <div class="project-modal-dialog" role="document">
+      <button type="button" class="project-modal-close" data-project-modal-close aria-label="Close project details">
+        <i class="bx bx-x"></i>
+      </button>
+      <div class="project-modal-body">
+        <p class="project-modal-kicker" id="project-modal-category"></p>
+        <h3 id="project-modal-title"></h3>
+        <div class="project-modal-content" id="project-modal-content"></div>
+      </div>
+    </div>
+  </div>
 
   <section id="skills">
     <div class="skills">
@@ -393,7 +409,8 @@
           <div class="skill-grid">
             <div class="skill-card">
               <h3>Esri GIS Stack</h3>
-              <p>ArcGIS Experience Builder, ArcGIS Maps SDK 4.x, ArcGIS Online, ArcGIS Pro, Web Maps, Feature Layers.
+              <p>ArcGIS Experience Builder, ArcGIS Maps SDK 4.x, ArcGIS Online, ArcGIS Enterprise, Web Maps, Feature
+                Layers.
               </p>
             </div>
             <div class="skill-card">
@@ -405,7 +422,7 @@
               <p>SaaS/PaaS support, incident management, escalations, RCA, service logs, SLA prioritization.</p>
             </div>
             <div class="skill-card">
-              <h3>Data & APIs</h3>
+              <h3>Data &amp; APIs</h3>
               <p>REST APIs, ArcGIS REST services, SQL Server, PostgreSQL, authentication, access control, data stores.
               </p>
             </div>
@@ -428,7 +445,7 @@
       <div class="contact-info">
         <div class="main-text">
           <h2 class="heading">Contact Me</h2>
-          <span>Contact & Address Information</span>
+          <span>Contact &amp; Address Information</span>
           <div class="contact-details">
             <p><strong>Address: </strong> Amman - Jordan</p>
             <p><strong>Phone Number: </strong><a href="tel:+962791118973"> +962 79 111 8973</a></p>
