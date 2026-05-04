@@ -281,6 +281,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  const enforceMutedVideo = (video) => {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+
+    video.addEventListener("volumechange", () => {
+      if (video.muted && video.volume === 0) return;
+      video.muted = true;
+      video.volume = 0;
+    });
+  };
+
   const renderProjectDetails = (project) => {
     if (!projectModalCategory || !projectModalTitle || !projectModalContent) return;
 
@@ -325,6 +337,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const video = document.createElement("video");
           video.controls = true;
           video.preload = "metadata";
+          video.playsInline = true;
+          enforceMutedVideo(video);
 
           const source = document.createElement("source");
           source.src = item.src;

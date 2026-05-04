@@ -969,7 +969,7 @@ body.modal-open #progress {
 .project-modal-media video {
   display: block;
   width: 100%;
-  height: min(340px, 52vw);
+  height: min(600px, 52vw);
   object-fit: cover;
 }
 
