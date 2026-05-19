@@ -107,6 +107,45 @@ document.addEventListener("DOMContentLoaded", () => {
         "RCA",
       ],
     },
+    "virtual-assistant-safety": {
+      category: "Research Publication",
+      title: "Evaluating a Virtual Assistant's Effectiveness in Enhancing in-Vehicle Safety: A Comparative Study",
+      summary: [
+        "IEEE-published ASET 2025 conference paper on multimodal in-vehicle safety interfaces for driver attention, response, and compliance.",
+        "The study compared static visual alerts, natural voice alerts, and avatar-based guidance under simulated driving conditions.",
+      ],
+      sections: [
+        {
+          title: "Publication Details",
+          items: [
+            "Authors include Luqman Ali, Hamad Aljassmi, Ahmad Ghaleb Issa, Fahed Saghir, Omar Aldhaheri, Mohamad Razouk, Zayed Alhammadi, and Fady Alnajjar.",
+            "Published in 2025 Advances in Science and Engineering Technology International Conferences, ASET.",
+            "Conference location: Dubai, United Arab Emirates.",
+            "DOI: 10.1109/ASET66891.2025.11427955.",
+          ],
+        },
+        {
+          title: "Research Focus",
+          items: [
+            "Evaluated driver reaction time, compliance, user satisfaction, and communication mode effectiveness.",
+            "Connected AI virtual assistant design with safer in-vehicle human-machine interaction.",
+          ],
+        },
+      ],
+      links: [
+        {
+          label: "Open DOI: 10.1109/ASET66891.2025.11427955",
+          href: "https://doi.org/10.1109/ASET66891.2025.11427955",
+        },
+      ],
+      tags: [
+        "IEEE",
+        "ASET 2025",
+        "AI",
+        "In-Vehicle Safety",
+        "Human-Machine Interaction",
+      ],
+    },
     "smart-city": {
       category: "Research",
       title: "Smart City Optimization Platform",
@@ -325,6 +364,22 @@ document.addEventListener("DOMContentLoaded", () => {
       wrapper.appendChild(list);
       fragment.appendChild(wrapper);
     });
+
+    if (project.links?.length) {
+      const links = document.createElement("div");
+      links.className = "project-modal-links";
+
+      project.links.forEach((item) => {
+        const link = document.createElement("a");
+        link.href = item.href;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = item.label;
+        links.appendChild(link);
+      });
+
+      fragment.appendChild(links);
+    }
 
     if (project.media?.length) {
       const mediaGrid = document.createElement("div");

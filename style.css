@@ -597,6 +597,13 @@ section {
   font-size: 0.95rem;
 }
 
+.timeline-content a {
+  color: #f0b2da;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .timeline-meta {
   color: #cfcfcf !important;
   font-weight: 500;
@@ -816,6 +823,31 @@ button.mixitup-control-active {
   font-size: 3rem;
 }
 
+.portfolio-box.publication-card {
+  flex: 0 1 clamp(330px, calc((100% - 2rem) / 3), 410px);
+  max-width: 410px;
+}
+
+.publication-card h3 {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.portfolio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.portfolio-actions .readMore {
+  margin-right: 0;
+}
+
+.publication-link {
+  background: linear-gradient(98deg, #3b7c8c 0%, #6d4fa8 100%);
+}
+
 .portfolio-box:hover .portfolio-img img {
   transform: scale(1.1);
   transition: transform 0.9s ease;
@@ -949,6 +981,25 @@ body.modal-open #progress {
 
 .project-modal-section li::marker {
   color: var(--main-color);
+}
+
+.project-modal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.project-modal-links a {
+  border: 1px solid rgba(240, 178, 218, 0.55);
+  border-radius: 5px;
+  color: #f0b2da;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 0.55rem 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .project-modal-media {
