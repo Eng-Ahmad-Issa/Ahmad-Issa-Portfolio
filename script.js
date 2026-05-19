@@ -1,15 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const menuIcon = document.querySelector(".menu-icon");
   const navlist = document.querySelector(".navlist");
+  const overlay = document.querySelector("[data-menu-close]");
   const aboutButtons = document.querySelectorAll(".about-btn button");
   const aboutContents = document.querySelectorAll(".content");
-  const text = document.querySelector(".text p");
-  const firstSkill = document.querySelector(".skill:first-child");
-  const skillCounters = document.querySelectorAll(".counter span");
-  const progressBars = document.querySelectorAll(".skills svg circle");
   const scrollProgress = document.getElementById("progress");
-  const menuLinks = document.querySelectorAll("header ul li a");
-  const sections = document.querySelectorAll("section");
+  const menuLinks = document.querySelectorAll("header nav a");
+  const sections = document.querySelectorAll("main section[id]");
   const documentElement = document.documentElement;
   const projectModal = document.getElementById("project-modal");
   const projectModalCategory = document.getElementById("project-modal-category");
@@ -17,8 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const projectModalContent = document.getElementById("project-modal-content");
   const projectModalCloseButtons = document.querySelectorAll("[data-project-modal-close]");
   const portfolioGallery = document.querySelector(".portfolio-gallery");
+  const filterButtons = document.querySelectorAll("[data-filter]");
+  const revealItems = document.querySelectorAll(".reveal");
+  const header = document.querySelector("[data-header]");
 
-  let skillsPlayed = false;
   let scrollTicking = false;
   let lastProjectTrigger = null;
 
@@ -83,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "esri-support": {
       category: "Technical Support",
-      title: "Esri Support & Platform Diagnostics",
+      title: "Esri Support and Platform Diagnostics",
       summary: [
         "Technical support work from Esri Support Center workflows at gistec, focused on diagnosing GIS platform issues and helping users restore reliable ArcGIS access.",
         "This experience connects development work with production behavior, access control, service health, data reliability, and supportability.",
@@ -245,8 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       media: [
         {
-          type: "video",
-          src: "img/portfolio/project6.mp4",
+          type: "image",
+          src: "img/portfolio/project6.png",
           caption: "Portfolio walkthrough media from the existing project assets.",
         },
       ],
@@ -260,29 +259,30 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
+  const closeMenu = () => {
+    if (!menuIcon || !navlist) return;
+
+    menuIcon.classList.remove("active");
+    navlist.classList.remove("active");
+    document.body.classList.remove("open");
+    menuIcon.setAttribute("aria-expanded", "false");
+  };
+
   const setupMenu = () => {
     if (!menuIcon || !navlist) return;
 
     menuIcon.addEventListener("click", () => {
-      menuIcon.classList.toggle("active");
-      navlist.classList.toggle("active");
-      document.body.classList.toggle("open");
+      const isOpen = navlist.classList.toggle("active");
+      menuIcon.classList.toggle("active", isOpen);
+      document.body.classList.toggle("open", isOpen);
+      menuIcon.setAttribute("aria-expanded", String(isOpen));
     });
 
-    navlist.addEventListener("click", () => {
-      navlist.classList.remove("active");
-      menuIcon.classList.remove("active");
-      document.body.classList.remove("open");
+    navlist.addEventListener("click", (event) => {
+      if (event.target.closest("a")) closeMenu();
     });
-  };
 
-  const setupRotatingText = () => {
-    if (!text) return;
-
-    text.innerHTML = text.textContent
-      .split("")
-      .map((char, i) => `<b style="transform: rotate(${i * 6.3}deg)">${char}</b>`)
-      .join("");
+    overlay?.addEventListener("click", closeMenu);
   };
 
   const setupAboutTabs = () => {
@@ -290,33 +290,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     aboutButtons.forEach((button, index) => {
       button.addEventListener("click", () => {
-        aboutContents.forEach((content) => {
-          content.style.display = "none";
+        aboutButtons.forEach((btn) => {
+          btn.classList.remove("active");
+          btn.setAttribute("aria-selected", "false");
         });
 
-        if (aboutContents[index]) {
-          aboutContents[index].style.display = "block";
-        }
+        aboutContents.forEach((content) => {
+          content.classList.remove("active");
+        });
 
-        aboutButtons.forEach((btn) => btn.classList.remove("active"));
         button.classList.add("active");
+        button.setAttribute("aria-selected", "true");
+        aboutContents[index]?.classList.add("active");
       });
     });
   };
 
   const setupPortfolioFilter = () => {
-    if (typeof mixitup !== "function") return;
+    if (!filterButtons.length || !portfolioGallery) return;
 
-    mixitup(".portfolio-gallery", {
-      selectors: {
-        target: ".portfolio-box",
-      },
-      animation: {
-        duration: 250,
-        nudge: false,
-        easing: "ease-out",
-        effects: "fade",
-      },
+    const cards = portfolioGallery.querySelectorAll(".portfolio-box");
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+
+        filterButtons.forEach((item) => item.classList.remove("filter-active"));
+        button.classList.add("filter-active");
+
+        cards.forEach((card) => {
+          const categories = card.dataset.category?.split(" ") ?? [];
+          const shouldShow = filter === "all" || categories.includes(filter);
+          card.classList.toggle("is-hidden", !shouldShow);
+        });
+      });
     });
   };
 
@@ -467,8 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.requestAnimationFrame(() => {
       projectModal.classList.add("is-open");
-      const closeButton = projectModal.querySelector(".project-modal-close");
-      closeButton?.focus();
+      projectModal.querySelector(".project-modal-close")?.focus();
     });
   };
 
@@ -510,106 +516,48 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", closeProjectModal);
     });
 
-    projectModal.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !projectModal.hidden) {
         closeProjectModal();
         return;
       }
 
-      trapProjectModalFocus(event);
-    });
-  };
-
-  const setupSwiper = () => {
-    if (typeof Swiper !== "function") return;
-
-    new Swiper(".mySwiper", {
-      slidesPerView: 1,
-      spaceBetween: 30,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-      },
-      breakpoints: {
-        576: {
-          slidesPerView: 2,
-          spaceBetween: 10,
-        },
-        1200: {
-          slidesPerView: 3,
-          spaceBetween: 20,
-        },
-      },
-    });
-  };
-
-  const hasReached = (el) => {
-    if (!el) return false;
-    const topPosition = el.getBoundingClientRect().top;
-    return window.innerHeight >= topPosition + el.offsetHeight;
-  };
-
-  const updateCount = (counter, maxNum) => {
-    const currentNum = Number(counter.innerText);
-
-    if (currentNum < maxNum) {
-      counter.innerText = String(currentNum + 1);
-      setTimeout(() => {
-        updateCount(counter, maxNum);
-      }, 12);
-    }
-  };
-
-  const runSkillsCounter = () => {
-    if (skillsPlayed || !hasReached(firstSkill)) return;
-
-    skillsPlayed = true;
-
-    skillCounters.forEach((counter, i) => {
-      const target = Number(counter.dataset.target);
-      const strokeValue = 465 - 465 * (target / 100);
-
-      if (progressBars[i]) {
-        progressBars[i].style.setProperty("--target", strokeValue);
-        progressBars[i].style.animation = "progress 2s ease-in-out forwards";
+      if (!projectModal.hidden) {
+        trapProjectModalFocus(event);
       }
-
-      setTimeout(() => {
-        updateCount(counter, target);
-      }, 400);
     });
+  };
+
+  const updateHeader = () => {
+    header?.classList.toggle("is-scrolled", window.scrollY > 24);
   };
 
   const updateScrollProgress = () => {
     if (!scrollProgress) return;
 
     const pos = documentElement.scrollTop;
-    const calcHeight =
-      documentElement.scrollHeight - documentElement.clientHeight;
-    const scrollValue =
-      calcHeight > 0 ? Math.round((pos * 100) / calcHeight) : 0;
+    const calcHeight = documentElement.scrollHeight - documentElement.clientHeight;
+    const scrollValue = calcHeight > 0 ? Math.round((pos * 100) / calcHeight) : 0;
 
     scrollProgress.style.display = pos > 100 ? "grid" : "none";
-    scrollProgress.style.background = `conic-gradient(#fff ${scrollValue}%, #e6006d ${scrollValue}%)`;
+    scrollProgress.style.background = `conic-gradient(var(--cyan) ${scrollValue}%, rgba(255, 255, 255, 0.12) ${scrollValue}%)`;
   };
 
   const updateActiveMenu = () => {
     if (!menuLinks.length || !sections.length) return;
 
-    let len = sections.length;
-    while (--len && window.scrollY + 97 < sections[len].offsetTop) {
-      // intentional empty loop
-    }
+    let currentId = sections[0].id;
 
-    menuLinks.forEach((link) => link.classList.remove("active"));
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 120;
+      if (window.scrollY >= sectionTop) {
+        currentId = section.id;
+      }
+    });
 
-    if (menuLinks[len]) {
-      menuLinks[len].classList.add("active");
-    }
+    menuLinks.forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${currentId}`);
+    });
   };
 
   const onScroll = () => {
@@ -617,7 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     scrollTicking = true;
     window.requestAnimationFrame(() => {
-      runSkillsCounter();
+      updateHeader();
       updateScrollProgress();
       updateActiveMenu();
       scrollTicking = false;
@@ -632,8 +580,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const setupSkillsObserver = () => {
-    if (!firstSkill || skillsPlayed || typeof IntersectionObserver !== "function") {
+  const setupReveal = () => {
+    if (!revealItems.length) return;
+
+    revealItems.forEach((item) => item.classList.add("reveal-pending"));
+
+    if (typeof IntersectionObserver !== "function") {
+      revealItems.forEach((item) => {
+        item.classList.remove("reveal-pending");
+        item.classList.add("is-visible");
+      });
       return;
     }
 
@@ -641,48 +597,25 @@ document.addEventListener("DOMContentLoaded", () => {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          runSkillsCounter();
-          observer.disconnect();
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
         });
       },
       {
-        root: null,
-        threshold: 0.2,
+        threshold: 0.14,
       }
     );
 
-    observer.observe(firstSkill);
-  };
-
-  const setupScrollReveal = () => {
-    if (typeof ScrollReveal !== "function") return;
-
-    ScrollReveal({
-      distance: "90px",
-      duration: 2000,
-      delay: 200,
-    });
-
-    ScrollReveal().reveal(".hero-info,.main-text,.proposal,.heading", {
-      origin: "top",
-    });
-    ScrollReveal().reveal(".about-img,.fillter-buttons,.contact-info", {
-      origin: "left",
-    });
-    ScrollReveal().reveal(".about-content,.skills,.experience", { origin: "right" });
+    revealItems.forEach((item) => observer.observe(item));
   };
 
   setupMenu();
-  setupRotatingText();
   setupAboutTabs();
   setupPortfolioFilter();
   setupProjectModal();
-  setupSwiper();
   setupScrollToTop();
-  setupSkillsObserver();
-  setupScrollReveal();
-
-  runSkillsCounter();
+  setupReveal();
+  updateHeader();
   updateScrollProgress();
   updateActiveMenu();
 
