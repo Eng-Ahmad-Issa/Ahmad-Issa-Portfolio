@@ -244,8 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       media: [
         {
-          type: "image",
-          src: "img/portfolio/project6.png",
+          type: "video",
+          src: "img/portfolio/project6.mp4",
           caption: "Portfolio walkthrough media from the existing project assets.",
         },
       ],
@@ -331,11 +331,13 @@ document.addEventListener("DOMContentLoaded", () => {
     video.muted = true;
     video.defaultMuted = true;
     video.volume = 0;
+    video.setAttribute("muted", "");
 
     video.addEventListener("volumechange", () => {
       if (video.muted && video.volume === 0) return;
       video.muted = true;
       video.volume = 0;
+      video.setAttribute("muted", "");
     });
   };
 
@@ -396,10 +398,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const figure = document.createElement("figure");
 
         if (item.type === "video") {
+          figure.className = "is-video";
+
           const video = document.createElement("video");
-          video.controls = true;
-          video.preload = "metadata";
+          video.autoplay = true;
+          video.controls = false;
+          video.loop = true;
+          video.preload = "auto";
           video.playsInline = true;
+          video.removeAttribute("controls");
+          video.setAttribute("autoplay", "");
+          video.setAttribute("loop", "");
+          video.setAttribute("playsinline", "");
           enforceMutedVideo(video);
 
           const source = document.createElement("source");
@@ -409,6 +419,8 @@ document.addEventListener("DOMContentLoaded", () => {
           video.appendChild(source);
           figure.appendChild(video);
         } else {
+          figure.className = "is-image";
+
           const image = document.createElement("img");
           image.src = item.src;
           image.alt = item.alt;
@@ -474,6 +486,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.requestAnimationFrame(() => {
       projectModal.classList.add("is-open");
+      projectModal.querySelectorAll("video").forEach((video) => {
+        video.play().catch(() => {});
+      });
       projectModal.querySelector(".project-modal-close")?.focus();
     });
   };
@@ -482,7 +497,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!projectModal || event.key !== "Tab") return;
 
     const focusable = projectModal.querySelectorAll(
-      'a[href], button:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])'
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
     );
 
     if (!focusable.length) return;

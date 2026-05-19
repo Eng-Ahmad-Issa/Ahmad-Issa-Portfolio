@@ -195,8 +195,7 @@ header.is-scrolled {
   box-shadow: 0 0 32px rgba(18, 215, 255, 0.22);
 }
 
-.logo-text,
-.logo {
+.logo-text {
   display: block;
   color: var(--text);
   font-size: 1rem;
@@ -210,10 +209,6 @@ header.is-scrolled {
   font-size: 0.78rem;
   font-weight: 700;
   line-height: 1.1;
-}
-
-.letter-A {
-  color: var(--lime);
 }
 
 .navlist {
@@ -1348,12 +1343,23 @@ footer p {
   background: rgba(255, 255, 255, 0.05);
 }
 
+.project-modal-media figure.is-video {
+  grid-column: 1 / -1;
+}
+
 .project-modal-media img,
 .project-modal-media video {
   display: block;
   width: 100%;
   height: min(520px, 52vw);
   object-fit: cover;
+}
+
+.project-modal-media figure.is-video video {
+  height: auto;
+  max-height: none;
+  background: #000;
+  object-fit: contain;
 }
 
 .project-modal-media figcaption {
@@ -1546,92 +1552,6 @@ footer span {
 .reveal.reveal-pending.is-visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-.project-details {
-  padding-top: 8rem;
-}
-
-.project-details h1,
-.project-details h2 {
-  color: var(--text);
-  font-size: 2.25rem;
-  line-height: 1.15;
-  margin-bottom: 1.25rem;
-}
-
-.project-details h3 {
-  color: var(--lime);
-  margin: 1.4rem 0 0.6rem;
-}
-
-.project-content {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.54fr);
-  gap: 1.5rem;
-  align-items: start;
-}
-
-.text-section,
-.image-section {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: var(--shadow);
-  padding: 1.2rem;
-}
-
-.text-section p,
-.text-section li {
-  color: var(--muted);
-}
-
-.text-section p + p {
-  margin-top: 0.8rem;
-}
-
-.text-section ul {
-  display: grid;
-  gap: 0.5rem;
-  padding-left: 1.2rem;
-  margin: 0.75rem 0;
-}
-
-.text-section li {
-  list-style: disc;
-}
-
-.text-section li::marker {
-  color: var(--cyan);
-}
-
-.text-section strong {
-  color: var(--text);
-}
-
-.image-section {
-  display: grid;
-  gap: 1rem;
-  place-items: center;
-}
-
-.image-section img,
-.image-section video {
-  width: 100% !important;
-  height: auto !important;
-  max-height: 680px;
-  border: 1px solid rgba(142, 234, 255, 0.16);
-  border-radius: 8px;
-  object-fit: cover;
-  padding: 0 !important;
-}
-
-.project-details-btn {
-  margin-top: 1.5rem;
-  width: auto;
-  border: 1px solid rgba(183, 255, 42, 0.45);
-  background: rgba(183, 255, 42, 0.08);
-  color: #dcff9c;
 }
 
 @keyframes drift {
@@ -1827,8 +1747,7 @@ footer span {
   }
 
   .about-grid,
-  .contact-grid,
-  .project-content {
+  .contact-grid {
     grid-template-columns: 1fr;
   }
 
