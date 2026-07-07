@@ -1,38 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
   <title id="title">Ahmad Issa GIS logo</title>
-  <desc id="desc">A dark geospatial logo with the letters AI, map rings, and route points.</desc>
+  <desc id="desc">A minimal AI monogram with a map route and coordinate point.</desc>
   <defs>
-    <linearGradient id="logo-bg" x1="31" y1="26" x2="226" y2="230" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#07181d"/>
-      <stop offset=".48" stop-color="#0a242b"/>
-      <stop offset="1" stop-color="#02080b"/>
+    <linearGradient id="edge" x1="26" y1="26" x2="230" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f0f0f0"/>
+      <stop offset=".52" stop-color="#707070"/>
+      <stop offset="1" stop-color="#d9ff74"/>
     </linearGradient>
-    <linearGradient id="logo-line" x1="42" y1="45" x2="212" y2="205" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#12d7ff"/>
-      <stop offset=".55" stop-color="#b7ff2a"/>
-      <stop offset="1" stop-color="#ff6b4a"/>
-    </linearGradient>
-    <linearGradient id="logo-text" x1="57" y1="83" x2="196" y2="174" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#f4fbff"/>
-      <stop offset=".45" stop-color="#12d7ff"/>
-      <stop offset=".78" stop-color="#b7ff2a"/>
-      <stop offset="1" stop-color="#ff6b4a"/>
-    </linearGradient>
-    <filter id="soft-glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.071 0 0 0 0 0.843 0 0 0 0 1 0 0 0 .7 0"/>
-      <feBlend in2="SourceGraphic" mode="screen"/>
-    </filter>
   </defs>
-  <rect width="256" height="256" rx="54" fill="url(#logo-bg)"/>
-  <path d="M27 128h202M128 27v202" stroke="#18424b" stroke-width="2" opacity=".55"/>
-  <path d="M64 51c50-29 117-12 146 38 30 50 13 116-37 146-50 29-116 12-146-38C-3 147 14 81 64 51Z" fill="none" stroke="#0d3a43" stroke-width="4"/>
-  <path d="M77 72c39-23 89-10 112 29s10 89-29 112-89 10-112-29-10-89 29-112Z" fill="none" stroke="#14525e" stroke-width="3" stroke-dasharray="8 10"/>
-  <path d="M52 155c25-52 65-19 93-57 24-32 52-31 74 1" fill="none" stroke="url(#logo-line)" stroke-width="8" stroke-linecap="round" stroke-dasharray="19 16" filter="url(#soft-glow)"/>
-  <circle cx="58" cy="154" r="10" fill="#02080b" stroke="#12d7ff" stroke-width="6"/>
-  <circle cx="144" cy="97" r="10" fill="#02080b" stroke="#b7ff2a" stroke-width="6"/>
-  <circle cx="218" cy="100" r="10" fill="#02080b" stroke="#ff6b4a" stroke-width="6"/>
-  <path d="M54 190 95 63h31l41 127h-31l-8-27H91l-8 27H54Zm45-53h21l-10-36-11 36Z" fill="url(#logo-text)"/>
-  <path d="M174 64h28v126h-28V64Z" fill="url(#logo-text)"/>
-  <path d="M34 34h188v188H34V34Z" fill="none" stroke="url(#logo-line)" stroke-width="5" opacity=".9"/>
+  <rect x="16" y="16" width="224" height="224" rx="30" fill="#111111"/>
+  <path d="M46 128h164M128 46v164" stroke="#242424" stroke-width="2"/>
+  <circle cx="128" cy="128" r="80" fill="none" stroke="#2d2d2d" stroke-width="3"/>
+  <circle cx="128" cy="128" r="52" fill="none" stroke="#242424" stroke-width="2" stroke-dasharray="6 10"/>
+  <path d="M51 188 89 68h29l39 120h-27l-8-27H85l-8 27H51Zm42-53h21l-10-38-11 38Z" fill="#eeeeee"/>
+  <path d="M174 68h29v120h-29V68Z" fill="#eeeeee"/>
+  <path d="M55 151c24-31 53-12 78-38 22-23 47-27 68-6" fill="none" stroke="#d9ff74" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="55" cy="151" r="8" fill="#111111" stroke="#eeeeee" stroke-width="4"/>
+  <circle cx="133" cy="113" r="8" fill="#111111" stroke="#d9ff74" stroke-width="4"/>
+  <circle cx="201" cy="107" r="8" fill="#111111" stroke="#eeeeee" stroke-width="4"/>
+  <rect x="16" y="16" width="224" height="224" rx="30" fill="none" stroke="url(#edge)" stroke-width="4"/>
 </svg>

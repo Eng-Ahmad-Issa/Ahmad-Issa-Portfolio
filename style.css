@@ -161,12 +161,11 @@ body.open .overlay {
 }
 
 .logo-image {
-  width: 2rem;
-  height: 2rem;
+  width: 2.05rem;
+  height: 2.05rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 0.18rem;
-  background: var(--panel);
+  background: var(--bg);
 }
 
 .logo-text,
@@ -226,21 +225,70 @@ body.open .overlay {
 }
 
 .rail-social a {
+  position: relative;
   display: grid;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2rem;
+  height: 2rem;
   place-items: center;
-  border: 1px solid transparent;
-  color: var(--text);
-  font-size: 0.68rem;
-  font-weight: 700;
-  transition: border-color var(--fast), color var(--fast), background var(--fast);
+  border: 1px solid var(--line-soft);
+  border-radius: 50%;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  transition:
+    border-color var(--fast),
+    color var(--fast),
+    background var(--fast),
+    transform var(--fast);
 }
 
-.rail-social a:hover {
-  border-color: var(--line);
-  background: var(--panel);
+.rail-social a::after {
+  content: attr(data-label);
+  position: absolute;
+  left: calc(100% + 0.7rem);
+  top: 50%;
+  min-width: max-content;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  color: var(--text);
+  background: var(--bg);
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0;
+  padding: 0.45rem 0.62rem;
+  pointer-events: none;
+  transform: translateY(-50%) translateX(-0.25rem);
+  transition: opacity var(--fast), transform var(--fast);
+}
+
+.rail-social svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.rail-social .contact-icon-linkedin {
+  fill: currentColor;
+  stroke: none;
+}
+
+.rail-social a:hover,
+.rail-social a:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-quiet);
   color: var(--accent);
+  transform: translateX(0.12rem);
+}
+
+.rail-social a:hover::after,
+.rail-social a:focus-visible::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
 }
 
 .menu-icon {
@@ -532,6 +580,11 @@ footer p {
   aspect-ratio: 4 / 5;
   object-fit: cover;
   filter: grayscale(1) contrast(1.05);
+  transition: filter var(--fast);
+}
+
+html[data-theme="light"] .about-portrait img {
+  filter: none;
 }
 
 .about-copy {
@@ -992,11 +1045,14 @@ footer p {
   }
 
   .logo-container {
-    grid-template-columns: auto;
+    grid-template-columns: 1.55rem auto;
+    column-gap: 0.5rem;
   }
 
   .logo-image {
-    display: none;
+    display: block;
+    width: 1.55rem;
+    height: 1.55rem;
   }
 
   .logo-text {
