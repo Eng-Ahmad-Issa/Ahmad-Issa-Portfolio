@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -13,11 +13,8 @@
 
 <body>
   <div class="site-bg" aria-hidden="true">
-    <span class="grid-layer"></span>
-    <span class="contour-layer"></span>
-    <span class="glow glow-cyan"></span>
-    <span class="glow glow-lime"></span>
-    <span class="glow glow-coral"></span>
+    <span class="map-line map-line-one"></span>
+    <span class="map-line map-line-two"></span>
   </div>
 
   <div class="overlay" data-menu-close></div>
@@ -34,11 +31,18 @@
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#portfolio">Works</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
+
+    <div class="rail-social" aria-label="Contact links">
+      <a target="_blank" href="https://www.linkedin.com/in/ahmad-issa-81772528b/" rel="noopener noreferrer"
+        aria-label="LinkedIn profile">LI</a>
+      <a href="mailto:ahmedsalemghaleb@gmail.com" aria-label="Email Ahmad Issa">EM</a>
+      <a href="tel:+962791118973" aria-label="Call Ahmad Issa">PH</a>
+    </div>
 
     <button class="menu-icon" type="button" aria-label="Open menu" aria-expanded="false"
       aria-controls="primary-navigation">
@@ -48,201 +52,95 @@
     </button>
   </header>
 
-  <main>
-    <section class="home geo-section" id="home">
-      <div class="hero-info reveal">
-        <h1>Ahmad Issa</h1>
-        <div class="text-animate" aria-label="Professional focus areas">
-          <h2>GIS Developer for Web GIS systems.</h2>
-          <h2>ArcGIS Experience Builder specialist.</h2>
-          <h2>Esri platform support analyst.</h2>
-        </div>
+  <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme"
+    aria-pressed="false">
+    <span></span>
+  </button>
 
-        <p>
-          I build and support Web GIS solutions using ArcGIS Experience Builder, ArcGIS Online,
+  <canvas class="cursor-smoke" data-cursor-smoke aria-hidden="true"></canvas>
+  <span class="cursor-ring" data-cursor-ring aria-hidden="true"></span>
+
+  <main>
+    <section class="home page-section" id="home">
+      <div class="hero-copy reveal">
+        <h1 aria-label="Ahmad Issa">
+          <span>Ahmad</span>
+          <span>Issa</span>
+        </h1>
+        <p class="hero-role">GIS Developer / Web GIS / Esri Support</p>
+        <p class="hero-summary">
+          I build and support Web GIS solutions with ArcGIS Experience Builder, ArcGIS Online,
           ArcGIS Enterprise, JavaScript, TypeScript, React, and REST APIs.
         </p>
-        <p class="hero-focus">
+        <div class="hero-actions" aria-label="Primary actions">
+          <a href="#contact">Contact</a>
+          <a href="img/resume.pdf" target="_blank" rel="noopener noreferrer">View CV</a>
+        </div>
+      </div>
+
+      <aside class="hero-aside reveal" aria-label="About preview">
+        <div class="section-rule">
+          <span>01</span>
+          <h2>About Me</h2>
+        </div>
+        <p>
+          Computer Engineer focused on GIS development, Esri support, and Web GIS applications.
           My work connects spatial data, custom widgets, data-driven maps, platform diagnostics,
           and clear technical delivery.
         </p>
-
-        <div class="btn-box">
-          <a href="#contact" class="btn btn-primary">Contact Me</a>
-          <a href="img/resume.pdf" target="_blank" class="btn btn-secondary" rel="noopener noreferrer">View CV</a>
-        </div>
-
-        <div class="social-media" aria-label="Contact links">
-          <a target="_blank" href="https://www.linkedin.com/in/ahmad-issa-81772528b/"
-            rel="noopener noreferrer">LinkedIn</a>
-          <a href="mailto:ahmedsalemghaleb@gmail.com">Email</a>
-          <a href="tel:+962791118973">Phone</a>
-        </div>
-      </div>
-
-      <div class="hero-visual reveal" aria-label="GIS developer visual">
-        <div class="route-map" aria-hidden="true">
-          <svg viewBox="0 0 520 520" role="img">
-            <defs>
-              <linearGradient id="routeGradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#12d7ff" />
-                <stop offset="50%" stop-color="#b7ff2a" />
-                <stop offset="100%" stop-color="#ff6b4a" />
-              </linearGradient>
-            </defs>
-            <path class="route-line"
-              d="M42 326 C92 220 146 382 206 244 C263 110 342 150 373 249 C405 352 474 258 492 356" />
-            <path class="route-line route-line-alt"
-              d="M68 142 C122 118 150 187 204 161 C282 123 312 82 385 121 C431 146 449 202 476 226" />
-            <circle cx="104" cy="285" r="7" />
-            <circle cx="260" cy="179" r="7" />
-            <circle cx="396" cy="292" r="7" />
-          </svg>
-        </div>
-
-        <div class="portrait-field">
-          <span class="orbit orbit-one"></span>
-          <span class="orbit orbit-two"></span>
-          <span class="orbit orbit-three"></span>
-          <img src="img/pro-photo.jpeg" alt="Ahmad Issa professional portrait" />
-        </div>
-
-        <div class="system-card card-top">
-          <p>System Focus</p>
-          <span>Web GIS</span>
-          <span>ArcGIS Services</span>
-          <span>Custom Widgets</span>
-        </div>
-
-        <div class="system-card card-bottom">
-          <p>Coordinates</p>
-          <span>Amman, Jordan</span>
-          <span>GIS + Frontend</span>
-        </div>
-      </div>
-
-      <a href="#about" class="scroll-cue" aria-label="Scroll to about section">
-        <span></span>
-      </a>
-
-      <a href="#about" class="hero-next-preview" aria-label="Preview about section">
-        <span>01</span>
-        <strong>About Me</strong>
-        <small>GIS development, Esri support, and frontend delivery profile</small>
-      </a>
+        <a class="text-link" href="mailto:ahmedsalemghaleb@gmail.com">ahmedsalemghaleb@gmail.com</a>
+      </aside>
     </section>
 
-    <section class="about geo-section" id="about">
-      <div class="section-heading reveal">
-        <span class="section-index">01</span>
-        <h2 class="heading">About Me</h2>
-        <p>Computer Engineer focused on GIS development, Esri support, and Web GIS applications.</p>
+    <section class="about page-section" id="about">
+      <div class="section-rule reveal">
+        <span>01</span>
+        <h2>About Me</h2>
       </div>
 
-      <div class="about-grid">
-        <div class="about-panel reveal">
-          <h3>Spatial applications with production discipline.</h3>
+      <div class="about-layout">
+        <figure class="about-portrait reveal">
+          <img src="img/pro-photo.jpeg" alt="Ahmad Issa professional portrait" />
+        </figure>
+
+        <div class="about-copy reveal">
           <p>
             I combine frontend engineering with Esri platform experience to deliver practical GIS applications.
             My work spans ArcGIS Experience Builder custom widgets, dashboards, ArcGIS REST service integration,
-            SaaS and PaaS troubleshooting, incident analysis, and technical documentation for client-facing GIS workflows.
+            SaaS and PaaS troubleshooting, incident analysis, and technical documentation for client-facing GIS
+            workflows.
           </p>
 
-          <div class="profile-stats" aria-label="Profile highlights">
-            <div>
-              <strong>2026</strong>
-              <span>GIS Developer at gistec</span>
-            </div>
-            <div>
-              <strong>Esri</strong>
-              <span>Support and platform diagnostics</span>
-            </div>
-            <div>
-              <strong>Web GIS</strong>
-              <span>React, TypeScript, REST services</span>
-            </div>
+          <div class="info-list">
+            <article>
+              <h3>Current Role</h3>
+              <p>Geographic Information System Developer at gistec, Apr 2026 to present, Amman, Jordan.</p>
+            </article>
+            <article>
+              <h3>Education</h3>
+              <p>Bachelor's Degree in Computer Engineering, United Arab Emirates University, Aug 2020 to Dec 2024.</p>
+            </article>
+            <article>
+              <h3>Certificates</h3>
+              <p>Modern Geo Apps, Front-End Development, Project Management Foundations, Data Science, and Networking.
+              </p>
+            </article>
           </div>
-        </div>
-
-        <div class="about-console reveal">
-          <div class="about-btn" role="tablist" aria-label="Profile details">
-            <button class="active" type="button" role="tab" aria-selected="true">Main Skills</button>
-            <button type="button" role="tab" aria-selected="false">Education</button>
-            <button type="button" role="tab" aria-selected="false">Certificates</button>
-          </div>
-
-          <div class="content-btn">
-            <div class="content active" role="tabpanel">
-              <div class="text-box">
-                <p>GIS Development</p>
-                <span>ArcGIS Experience Builder Developer Edition, ArcGIS Maps SDK for JavaScript, ArcGIS Online,
-                  ArcGIS Enterprise, Web Maps, Feature Layers, and ArcGIS REST services.</span>
-              </div>
-              <div class="text-box">
-                <p>Frontend Engineering</p>
-                <span>HTML5, CSS, SCSS, SASS, JavaScript, TypeScript, React.js, responsive layouts,
-                  reusable UI components, and browser-based data visualization.</span>
-              </div>
-              <div class="text-box">
-                <p>Platform Support</p>
-                <span>SaaS and PaaS application support, incident handling, root cause analysis, logs,
-                  access control, authentication, and SLA-driven ticket resolution.</span>
-              </div>
-              <div class="text-box">
-                <p>Data and Integration</p>
-                <span>REST APIs, ArcGIS services, SQL Server, PostgreSQL, database connectivity,
-                  data stores, and map-driven integration workflows.</span>
-              </div>
-            </div>
-
-            <div class="content" role="tabpanel">
-              <div class="text-box">
-                <p>Bachelor's Degree in Computer Engineering</p>
-                <span>United Arab Emirates University, August 2020 to December 2024.</span>
-              </div>
-            </div>
-
-            <div class="content" role="tabpanel">
-              <div class="text-box">
-                <p>Make an Impact with Modern Geo Apps</p>
-                <span>Esri-focused learning around modern GIS applications and practical ArcGIS workflows.</span>
-              </div>
-              <div class="text-box">
-                <p>Front-End Development</p>
-                <span>HTML, CSS, JavaScript, responsive UI, and modern web application patterns.</span>
-              </div>
-              <div class="text-box">
-                <p>Project Management Foundations</p>
-                <span>Planning, organizing, and executing projects with clear communication and team coordination.</span>
-              </div>
-              <div class="text-box">
-                <p>Data Science and Networking</p>
-                <span>Cisco Networking Academy coursework in data analysis, IP addressing, subnetting,
-                  and network troubleshooting.</span>
-              </div>
-            </div>
-          </div>
-
-          <a href="img/resume.pdf" target="_blank" class="btn btn-secondary" rel="noopener noreferrer">Open CV</a>
         </div>
       </div>
     </section>
 
-    <section class="experience geo-section" id="experience">
-      <div class="section-heading reveal">
-        <span class="section-index">02</span>
-        <h2 class="heading">Professional Experience</h2>
-        <p>gistec, Esri support, and GIS application delivery.</p>
+    <section class="experience page-section" id="experience">
+      <div class="section-rule reveal">
+        <span>02</span>
+        <h2>Professional Experience</h2>
       </div>
 
       <div class="timeline">
         <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
+          <p class="timeline-meta">Apr 2026 to Present / gistec / Amman</p>
           <div class="timeline-content">
-            <div>
-              <h3>Geographic Information System Developer</h3>
-              <p class="timeline-meta">gistec | Apr 2026 to Present | Amman, Jordan</p>
-            </div>
+            <h3>Geographic Information System Developer</h3>
             <p>
               Building GIS solutions and custom Web GIS workflows using ArcGIS technologies, JavaScript,
               HTML5, and modern frontend patterns.
@@ -256,12 +154,9 @@
         </article>
 
         <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
+          <p class="timeline-meta">Sep 2025 to Apr 2026 / gistec / Amman</p>
           <div class="timeline-content">
-            <div>
-              <h3>Technical Support Analyst</h3>
-              <p class="timeline-meta">gistec | Sep 2025 to Apr 2026 | Amman, Jordan</p>
-            </div>
+            <h3>Technical Support Analyst</h3>
             <p>
               Supported Esri Support Center workflows by troubleshooting ArcGIS Online, ArcGIS Enterprise,
               platform access, service behavior, logs, data issues, and customer incidents.
@@ -276,12 +171,9 @@
         </article>
 
         <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
+          <p class="timeline-meta">Sep 2024 to Aug 2025 / gistec / Amman</p>
           <div class="timeline-content">
-            <div>
-              <h3>Web Developer</h3>
-              <p class="timeline-meta">gistec | Sep 2024 to Aug 2025 | Amman, Jordan</p>
-            </div>
+            <h3>Web Developer</h3>
             <p>
               Developed and customized ArcGIS Experience Builder widgets, GIS dashboards,
               REST API integrations, and responsive web interfaces for government and enterprise GIS workflows.
@@ -296,18 +188,16 @@
         </article>
 
         <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
+          <p class="timeline-meta">Jun 2022 to Sep 2024 / United Arab Emirates University / Al Ain</p>
           <div class="timeline-content">
-            <div>
-              <h3>Researcher</h3>
-              <p class="timeline-meta">United Arab Emirates University | Jun 2022 to Sep 2024 | Al Ain, UAE</p>
-            </div>
+            <h3>Researcher</h3>
             <p>
               Co-authored the IEEE-published paper
               <a href="https://doi.org/10.1109/ASET66891.2025.11427955" target="_blank" rel="noopener noreferrer">
                 Evaluating a Virtual Assistant's Effectiveness in Enhancing in-Vehicle Safety: A Comparative Study
               </a>
-              for ASET 2025 and contributed to a smart city optimization platform using IoT and machine learning concepts.
+              for ASET 2025 and contributed to a smart city optimization platform using IoT and machine learning
+              concepts.
             </p>
             <div class="project-tags">
               <span>Research</span>
@@ -319,11 +209,10 @@
       </div>
     </section>
 
-    <section class="portfolio geo-section" id="portfolio">
-      <div class="section-heading reveal">
-        <span class="section-index">03</span>
-        <h2 class="heading">Selected Projects</h2>
-        <p>GIS, support, web, and applied research work with confidential client details removed.</p>
+    <section class="portfolio page-section" id="portfolio">
+      <div class="section-rule reveal">
+        <span>03</span>
+        <h2>Selected Projects</h2>
       </div>
 
       <div class="filter-buttons reveal" aria-label="Project filters">
@@ -336,9 +225,7 @@
 
       <div class="portfolio-gallery">
         <article class="portfolio-box reveal" data-category="gis web software">
-          <div class="portfolio-visual visual-map" aria-hidden="true">
-            <span></span>
-          </div>
+          <span class="portfolio-index">01</span>
           <div class="portfolio-content">
             <h3>Government GIS Dashboards</h3>
             <p>ArcGIS Experience Builder dashboards and widgets for map-driven public-sector workflows.</p>
@@ -346,14 +233,12 @@
               <span>Experience Builder</span>
               <span>Web Maps</span>
             </div>
-            <button type="button" class="readMore" data-project-modal="government-gis">View More</button>
           </div>
+          <button type="button" class="readMore" data-project-modal="government-gis">View More</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="gis web software">
-          <div class="portfolio-visual visual-code" aria-hidden="true">
-            <span></span>
-          </div>
+          <span class="portfolio-index">02</span>
           <div class="portfolio-content">
             <h3>Custom Experience Builder Widgets</h3>
             <p>Reusable React and TypeScript widgets for filtering, map interaction, and ArcGIS services.</p>
@@ -361,14 +246,12 @@
               <span>React</span>
               <span>TypeScript</span>
             </div>
-            <button type="button" class="readMore" data-project-modal="experience-builder">View More</button>
           </div>
+          <button type="button" class="readMore" data-project-modal="experience-builder">View More</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="support">
-          <div class="portfolio-visual visual-support" aria-hidden="true">
-            <span></span>
-          </div>
+          <span class="portfolio-index">03</span>
           <div class="portfolio-content">
             <h3>Esri Support and Platform Diagnostics</h3>
             <p>Case analysis, access checks, service diagnostics, log review, and RCA documentation.</p>
@@ -376,30 +259,25 @@
               <span>ArcGIS Enterprise</span>
               <span>RCA</span>
             </div>
-            <button type="button" class="readMore" data-project-modal="esri-support">View More</button>
           </div>
+          <button type="button" class="readMore" data-project-modal="esri-support">View More</button>
         </article>
 
         <article class="portfolio-box reveal publication-card" data-category="research software">
-          <div class="portfolio-visual visual-paper" aria-hidden="true">
-            <span></span>
-          </div>
+          <span class="portfolio-index">04</span>
           <div class="portfolio-content">
             <h3>Evaluating a Virtual Assistant's Effectiveness in Enhancing in-Vehicle Safety</h3>
             <p>IEEE-published ASET 2025 conference paper on multimodal in-vehicle safety interfaces.</p>
-            <div class="portfolio-actions">
-              <button type="button" class="readMore" data-project-modal="virtual-assistant-safety">View More</button>
-              <a class="readMore publication-link" href="https://doi.org/10.1109/ASET66891.2025.11427955"
-                target="_blank" rel="noopener noreferrer">DOI</a>
-            </div>
+          </div>
+          <div class="portfolio-actions">
+            <button type="button" class="readMore" data-project-modal="virtual-assistant-safety">View More</button>
+            <a class="readMore publication-link" href="https://doi.org/10.1109/ASET66891.2025.11427955"
+              target="_blank" rel="noopener noreferrer">DOI</a>
           </div>
         </article>
 
         <article class="portfolio-box reveal" data-category="research software">
-          <div class="portfolio-img">
-            <img src="img/portfolio/project3.webp" alt="Smart city optimization platform" loading="lazy"
-              decoding="async" />
-          </div>
+          <span class="portfolio-index">05</span>
           <div class="portfolio-content">
             <h3>Smart City Optimization Platform</h3>
             <p>IoT and machine learning concept for urban planning, environmental sensing, and decisions.</p>
@@ -407,14 +285,12 @@
               <span>IoT</span>
               <span>Machine Learning</span>
             </div>
-            <button type="button" class="readMore" data-project-modal="smart-city">View More</button>
           </div>
+          <button type="button" class="readMore" data-project-modal="smart-city">View More</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="research hardware">
-          <div class="portfolio-img">
-            <img src="img/portfolio/project2.webp" alt="Autonomous smart car robot" loading="lazy" decoding="async" />
-          </div>
+          <span class="portfolio-index">06</span>
           <div class="portfolio-content">
             <h3>Autonomous Smart Car Robot</h3>
             <p>Embedded navigation and computer vision prototype for line following and obstacle avoidance.</p>
@@ -422,14 +298,12 @@
               <span>OpenCV</span>
               <span>Robotics</span>
             </div>
-            <button type="button" class="readMore" data-project-modal="autonomous-car">View More</button>
           </div>
+          <button type="button" class="readMore" data-project-modal="autonomous-car">View More</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="web software">
-          <div class="portfolio-img">
-            <img src="img/portfolio/project6.webp" alt="Portfolio website preview" loading="lazy" decoding="async" />
-          </div>
+          <span class="portfolio-index">07</span>
           <div class="portfolio-content">
             <h3>Portfolio Website</h3>
             <p>Static HTML, CSS, and JavaScript portfolio refined for GIS development and Esri experience.</p>
@@ -438,8 +312,8 @@
               <span>CSS</span>
               <span>JavaScript</span>
             </div>
-            <button type="button" class="readMore" data-project-modal="portfolio-site">View More</button>
           </div>
+          <button type="button" class="readMore" data-project-modal="portfolio-site">View More</button>
         </article>
       </div>
     </section>
@@ -459,91 +333,108 @@
       </div>
     </div>
 
-    <section class="skills geo-section" id="skills">
-      <div class="section-heading reveal">
-        <span class="section-index">04</span>
-        <h2 class="heading">Skill Matrix</h2>
-        <p>Esri, Web GIS, support, and frontend delivery.</p>
+    <section class="skills page-section" id="skills">
+      <div class="section-rule reveal">
+        <span>04</span>
+        <h2>Skill Matrix</h2>
       </div>
 
       <div class="skill-grid">
         <article class="skill-card reveal">
           <h3>Esri GIS Stack</h3>
-          <p>ArcGIS Experience Builder, ArcGIS Maps SDK 4.x, ArcGIS Online, ArcGIS Enterprise, Web Maps, Feature Layers.</p>
-          <div class="skill-dots" aria-label="Advanced skill level"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="skill-pills">
+            <span>ArcGIS Experience Builder</span>
+            <span>ArcGIS Maps SDK</span>
+            <span>ArcGIS Online</span>
+            <span>ArcGIS Enterprise</span>
+            <span>Web Maps</span>
+            <span>Feature Layers</span>
+          </div>
         </article>
         <article class="skill-card reveal">
           <h3>Frontend</h3>
-          <p>TypeScript, JavaScript, React.js, HTML5, CSS, SCSS, SASS, responsive UI, reusable components.</p>
-          <div class="skill-dots" aria-label="Advanced skill level"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="skill-pills">
+            <span>TypeScript</span>
+            <span>JavaScript</span>
+            <span>React.js</span>
+            <span>HTML5</span>
+            <span>CSS</span>
+            <span>SCSS</span>
+            <span>SASS</span>
+          </div>
         </article>
         <article class="skill-card reveal">
           <h3>Support Operations</h3>
-          <p>SaaS and PaaS support, incident management, escalations, RCA, service logs, SLA prioritization.</p>
-          <div class="skill-dots" aria-label="Advanced skill level"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="skill-pills">
+            <span>SaaS</span>
+            <span>PaaS</span>
+            <span>Incident Management</span>
+            <span>Escalations</span>
+            <span>RCA</span>
+            <span>SLA</span>
+          </div>
         </article>
         <article class="skill-card reveal">
           <h3>Data and APIs</h3>
-          <p>REST APIs, ArcGIS REST services, SQL Server, PostgreSQL, authentication, access control, data stores.</p>
-          <div class="skill-dots" aria-label="Intermediate skill level"><span></span><span></span><span></span><span></span></div>
+          <div class="skill-pills">
+            <span>REST APIs</span>
+            <span>ArcGIS REST services</span>
+            <span>SQL Server</span>
+            <span>PostgreSQL</span>
+            <span>Authentication</span>
+            <span>Access Control</span>
+          </div>
         </article>
         <article class="skill-card reveal">
           <h3>Tools</h3>
-          <p>Git, VS Code, Visual Studio, Jupyter Notebook, Anaconda, Cisco Packet Tracer, Microsoft Office.</p>
-          <div class="skill-dots" aria-label="Advanced skill level"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="skill-pills">
+            <span>Git</span>
+            <span>VS Code</span>
+            <span>Visual Studio</span>
+            <span>Jupyter Notebook</span>
+            <span>Anaconda</span>
+            <span>Microsoft Office</span>
+          </div>
         </article>
         <article class="skill-card reveal">
           <h3>Delivery</h3>
-          <p>Technical documentation, knowledge-base content, client troubleshooting, and agile collaboration.</p>
-          <div class="skill-dots" aria-label="Advanced skill level"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="skill-pills">
+            <span>Technical Documentation</span>
+            <span>Knowledge Base</span>
+            <span>Client Troubleshooting</span>
+            <span>Agile Collaboration</span>
+          </div>
         </article>
       </div>
     </section>
 
-    <section class="down-box geo-section" id="contact">
-      <div class="section-heading reveal">
-        <span class="section-index">05</span>
-        <h2 class="heading">Contact</h2>
-        <p>Reach me for GIS development, Web GIS delivery, and Esri platform support work.</p>
+    <section class="down-box page-section" id="contact">
+      <div class="section-rule reveal">
+        <span>05</span>
+        <h2>Contact</h2>
       </div>
 
-      <div class="contact-grid">
-        <div class="contact-panel reveal">
-          <h3>Let's build reliable spatial applications.</h3>
-          <p>
-            I focus on practical systems: custom Experience Builder widgets, map-driven dashboards,
-            ArcGIS service integration, and production troubleshooting.
-          </p>
-          <div class="btn-box contact-actions">
-            <a class="btn btn-primary" href="mailto:ahmedsalemghaleb@gmail.com">Email Me</a>
-            <a class="btn btn-secondary" target="_blank" href="https://www.linkedin.com/in/ahmad-issa-81772528b/"
-              rel="noopener noreferrer">LinkedIn</a>
-          </div>
-        </div>
-
-        <div class="contact-info reveal">
-          <div class="contact-details">
-            <p><strong>Address</strong><a href="https://maps.google.com/?q=Amman%2C%20Jordan" target="_blank"
-                rel="noopener noreferrer">Amman, Jordan</a></p>
-            <p><strong>Phone</strong><a href="tel:+962791118973">+962 79 111 8973</a></p>
-            <p><strong>Email</strong><a href="mailto:ahmedsalemghaleb@gmail.com">ahmedsalemghaleb@gmail.com</a></p>
-            <p><strong>LinkedIn</strong><a href="https://www.linkedin.com/in/ahmad-issa-81772528b/" target="_blank"
-                rel="noopener noreferrer">linkedin.com/in/ahmad-issa</a></p>
-          </div>
+      <div class="contact-layout reveal">
+        <h3>Let's build reliable spatial applications.</h3>
+        <p>
+          I focus on practical systems: custom Experience Builder widgets, map-driven dashboards,
+          ArcGIS service integration, and production troubleshooting.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:ahmedsalemghaleb@gmail.com">Email Me</a>
+          <a target="_blank" href="https://www.linkedin.com/in/ahmad-issa-81772528b/"
+            rel="noopener noreferrer">LinkedIn</a>
+          <a href="tel:+962791118973">+962 79 111 8973</a>
+          <a href="https://maps.google.com/?q=Amman%2C%20Jordan" target="_blank" rel="noopener noreferrer">Amman,
+            Jordan</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>This portfolio presents my GIS development, Esri platform support, and web engineering work across ArcGIS
-      Experience Builder, ArcGIS services, and modern frontend technologies.</p>
-    <p>Copyright &copy; 2026 by <span>Ahmad Issa</span>. All rights reserved.</p>
+    <p>Copyright &copy; 2026 Ahmad Issa. GIS Development, Web GIS, and Esri platform support.</p>
   </footer>
-
-  <button id="progress" type="button" aria-label="Back to top">
-    <span id="progress-value">&uarr;</span>
-  </button>
 
   <script src="script.js"></script>
 </body>
