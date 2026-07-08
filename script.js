@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
       category: "GIS Development",
       title: "Government GIS Dashboards",
       summary: [
-        "ArcGIS dashboard and web mapping delivery for public-sector workflows. This summary stays client-neutral because project data and screenshots are confidential.",
-        "The work focused on map interaction, filtering, responsive layouts, and ArcGIS service integration for operational users.",
+        "Frontend delivery for ArcGIS dashboard and web mapping workflows. This summary stays client-neutral because project data and screenshots are confidential.",
+        "The work focused on interface structure, map interaction, filtering, responsive layouts, and ArcGIS service integration for operational users.",
       ],
       sections: [
         {
@@ -59,10 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
     },
     "experience-builder": {
-      category: "Web GIS",
+      category: "Frontend and Web GIS",
       title: "Custom Experience Builder Widgets",
       summary: [
-        "Reusable GIS widget development for ArcGIS Experience Builder Developer Edition, focused on filtering, map interaction, and service-driven UI behavior.",
+        "Reusable React and TypeScript widget development for ArcGIS Experience Builder Developer Edition, focused on filtering, map interaction, and service-driven UI behavior.",
         "The work aligns with Esri widget patterns while keeping client delivery details private.",
       ],
       sections: [
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
       category: "Technical Support",
       title: "Esri Support and Platform Diagnostics",
       summary: [
-        "Technical support work from Esri Support Center workflows at gistec, focused on diagnosing GIS platform issues and helping users restore reliable ArcGIS access.",
+        "Technical support work from Esri Support Center workflows at gistec, focused on diagnosing platform issues and restoring reliable access.",
         "This experience connects development work with production behavior, access control, service health, data reliability, and supportability.",
       ],
       sections: [
@@ -230,16 +230,16 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "portfolio-site": {
       category: "Web",
-      title: "Portfolio Website",
+      title: "Frontend Portfolio System",
       summary: [
-        "Static HTML, CSS, and JavaScript portfolio refined around GIS Developer positioning, Esri support experience, and Web GIS delivery.",
+        "Static HTML, CSS, and JavaScript portfolio refined around a full stack developer story, senior front-end strength, and practical delivery.",
         "The project section now uses a single-page modal flow, which reduces page sprawl and keeps selected work easier to maintain.",
       ],
       sections: [
         {
           title: "Current Improvements",
           items: [
-            "Updated content around ArcGIS Experience Builder, Web GIS, Esri support, and frontend delivery.",
+            "Updated content around full stack development, front-end delivery, GIS experience, and support depth.",
             "Moved project details into one reusable modal pattern.",
             "Kept confidential client work general while preserving the technical value.",
             "Improved the project section for faster scanning and simpler maintenance.",

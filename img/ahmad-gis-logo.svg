@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">Ahmad Issa GIS logo</title>
-  <desc id="desc">A minimal AI monogram with a map route and coordinate point.</desc>
+  <title id="title">Ahmad Issa developer logo</title>
+  <desc id="desc">A minimal AI monogram with a wine red route and coordinate point.</desc>
   <defs>
     <linearGradient id="edge" x1="26" y1="26" x2="230" y2="230" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#f0f0f0"/>
       <stop offset=".52" stop-color="#707070"/>
-      <stop offset="1" stop-color="#d9ff74"/>
+      <stop offset="1" stop-color="#7a151a"/>
     </linearGradient>
   </defs>
   <rect x="16" y="16" width="224" height="224" rx="30" fill="#111111"/>
@@ -14,9 +14,9 @@
   <circle cx="128" cy="128" r="52" fill="none" stroke="#242424" stroke-width="2" stroke-dasharray="6 10"/>
   <path d="M51 188 89 68h29l39 120h-27l-8-27H85l-8 27H51Zm42-53h21l-10-38-11 38Z" fill="#eeeeee"/>
   <path d="M174 68h29v120h-29V68Z" fill="#eeeeee"/>
-  <path d="M55 151c24-31 53-12 78-38 22-23 47-27 68-6" fill="none" stroke="#d9ff74" stroke-width="8" stroke-linecap="round"/>
+  <path d="M55 151c24-31 53-12 78-38 22-23 47-27 68-6" fill="none" stroke="#7a151a" stroke-width="8" stroke-linecap="round"/>
   <circle cx="55" cy="151" r="8" fill="#111111" stroke="#eeeeee" stroke-width="4"/>
-  <circle cx="133" cy="113" r="8" fill="#111111" stroke="#d9ff74" stroke-width="4"/>
+  <circle cx="133" cy="113" r="8" fill="#111111" stroke="#b33a45" stroke-width="4"/>
   <circle cx="201" cy="107" r="8" fill="#111111" stroke="#eeeeee" stroke-width="4"/>
   <rect x="16" y="16" width="224" height="224" rx="30" fill="none" stroke="url(#edge)" stroke-width="4"/>
 </svg>
