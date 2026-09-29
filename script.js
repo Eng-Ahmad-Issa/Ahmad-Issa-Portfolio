@@ -15,11 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const projectModalCloseButtons = document.querySelectorAll("[data-project-modal-close]");
   const portfolioGallery = document.querySelector(".portfolio-gallery");
   const filterButtons = document.querySelectorAll("[data-filter]");
+  const filterStatus = document.getElementById("project-filter-status");
   const revealItems = document.querySelectorAll(".reveal");
   const header = document.querySelector("[data-header]");
   const themeToggle = document.querySelector("[data-theme-toggle]");
   const cursorSmoke = document.querySelector("[data-cursor-smoke]");
   const cursorRing = document.querySelector("[data-cursor-ring]");
+  const mobileMenu = window.matchMedia("(max-width: 680px)");
 
   let scrollTicking = false;
   let lastProjectTrigger = null;
@@ -387,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const closeMenu = () => {
+  const closeMenu = (restoreFocus = false) => {
     if (!menuIcon || !navlist) return;
 
     menuIcon.classList.remove("active");
@@ -395,24 +397,69 @@ document.addEventListener("DOMContentLoaded", () => {
     navlist.parentElement?.classList.remove("active");
     document.body.classList.remove("open");
     menuIcon.setAttribute("aria-expanded", "false");
+    menuIcon.setAttribute("aria-label", "Open menu");
+    navlist.parentElement.inert = mobileMenu.matches;
+    document.querySelector("main").inert = false;
+    document.querySelector("footer").inert = false;
+    if (restoreFocus) menuIcon.focus();
   };
 
   const setupMenu = () => {
     if (!menuIcon || !navlist) return;
+    closeMenu();
 
     menuIcon.addEventListener("click", () => {
-      const isOpen = navlist.classList.toggle("active");
-      navlist.parentElement?.classList.toggle("active", isOpen);
-      menuIcon.classList.toggle("active", isOpen);
-      document.body.classList.toggle("open", isOpen);
-      menuIcon.setAttribute("aria-expanded", String(isOpen));
+      if (document.body.classList.contains("open")) {
+        closeMenu(true);
+        return;
+      }
+      navlist.classList.add("active");
+      navlist.parentElement.classList.add("active");
+      navlist.parentElement.inert = false;
+      menuIcon.classList.add("active");
+      document.body.classList.add("open");
+      menuIcon.setAttribute("aria-expanded", "true");
+      menuIcon.setAttribute("aria-label", "Close menu");
+      document.querySelector("main").inert = true;
+      document.querySelector("footer").inert = true;
+      menuLinks[0]?.focus();
     });
 
-    navlist.addEventListener("click", (event) => {
-      if (event.target.closest("a")) closeMenu();
+    header.addEventListener("click", (event) => {
+      const link = event.target.closest("a");
+      if (!link?.getAttribute("href")?.startsWith("#") || !document.body.classList.contains("open")) return;
+      closeMenu();
+      const target = document.querySelector(link.getAttribute("href"));
+      target?.setAttribute("tabindex", "-1");
+      target?.focus({ preventScroll: true });
     });
 
-    overlay?.addEventListener("click", closeMenu);
+    overlay?.addEventListener("click", () => closeMenu(true));
+    mobileMenu.addEventListener("change", () => {
+      const wasOpen = document.body.classList.contains("open");
+      closeMenu();
+      if (wasOpen && !mobileMenu.matches) menuLinks[0]?.focus();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (!document.body.classList.contains("open")) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu(true);
+      }
+      if (event.key === "Tab") {
+        const controls = [...header.querySelectorAll("a[href], button"), themeToggle]
+          .filter((element) => element && element.getClientRects().length);
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
   };
 
   const getStoredTheme = () => {
@@ -478,37 +525,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cards = portfolioGallery.querySelectorAll(".portfolio-box");
 
-    filterButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const filter = button.dataset.filter;
+    const applyFilter = (button) => {
+      const filter = button.dataset.filter;
 
-        filterButtons.forEach((item) => {
-          item.classList.remove("filter-active");
-          item.setAttribute("aria-pressed", String(item === button));
-        });
-        button.classList.add("filter-active");
-
-        cards.forEach((card) => {
-          const categories = card.dataset.category?.split(" ") ?? [];
-          const shouldShow = filter === "all" || categories.includes(filter);
-          card.classList.toggle("is-hidden", !shouldShow);
-        });
+      filterButtons.forEach((item) => {
+        item.classList.toggle("filter-active", item === button);
+        item.setAttribute("aria-pressed", String(item === button));
       });
-    });
-  };
 
-  const enforceMutedVideo = (video) => {
-    video.muted = true;
-    video.defaultMuted = true;
-    video.volume = 0;
-    video.setAttribute("muted", "");
+      cards.forEach((card) => {
+        const categories = card.dataset.category?.split(" ") ?? [];
+        const shouldShow = filter === "all" || categories.includes(filter);
+        card.classList.toggle("is-hidden", !shouldShow);
+      });
 
-    video.addEventListener("volumechange", () => {
-      if (video.muted && video.volume === 0) return;
-      video.muted = true;
-      video.volume = 0;
-      video.setAttribute("muted", "");
+      if (filterStatus) {
+        const visibleCount = Array.from(cards).filter((card) => !card.classList.contains("is-hidden")).length;
+        const label = button.textContent?.trim() || "selected";
+        const noun = visibleCount === 1 ? "project" : "projects";
+        filterStatus.textContent = filter === "all"
+          ? `Showing all ${visibleCount} ${noun}.`
+          : `${label}: ${visibleCount} ${noun}.`;
+      }
+    };
+
+    filterButtons.forEach((button) => {
+      button.setAttribute("aria-controls", "project-gallery");
+      button.addEventListener("click", () => applyFilter(button));
     });
+    applyFilter(document.querySelector('[data-filter][aria-pressed="true"]') || filterButtons[0]);
   };
 
   const renderProjectDetails = (project) => {
@@ -571,16 +616,13 @@ document.addEventListener("DOMContentLoaded", () => {
           figure.className = "is-video";
 
           const video = document.createElement("video");
-          video.autoplay = true;
-          video.controls = false;
-          video.loop = true;
-          video.preload = "auto";
+          video.controls = true;
+          video.preload = "metadata";
           video.playsInline = true;
-          video.removeAttribute("controls");
-          video.setAttribute("autoplay", "");
-          video.setAttribute("loop", "");
           video.setAttribute("playsinline", "");
-          enforceMutedVideo(video);
+          video.setAttribute("aria-label", item.caption || `${project.title} demonstration`);
+          video.muted = true;
+          video.defaultMuted = true;
 
           const source = document.createElement("source");
           source.src = item.src;
@@ -628,21 +670,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const closeProjectModal = () => {
-    if (!projectModal) return;
-
-    projectModal.querySelectorAll("video").forEach((video) => {
-      video.pause();
-      video.currentTime = 0;
-    });
-
-    projectModal.classList.remove("is-open");
-    projectModal.hidden = true;
-    document.body.classList.remove("modal-open");
-
-    if (lastProjectTrigger) {
-      lastProjectTrigger.focus();
-      lastProjectTrigger = null;
-    }
+    projectModal?.close();
   };
 
   const openProjectModal = (projectKey, trigger) => {
@@ -651,65 +679,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     lastProjectTrigger = trigger;
     renderProjectDetails(project);
-    projectModal.hidden = false;
     document.body.classList.add("modal-open");
-
-    window.requestAnimationFrame(() => {
-      projectModal.classList.add("is-open");
-      projectModal.querySelectorAll("video").forEach((video) => {
-        video.play().catch(() => {});
-      });
-      projectModal.querySelector(".project-modal-close")?.focus();
-    });
-  };
-
-  const trapProjectModalFocus = (event) => {
-    if (!projectModal || event.key !== "Tab") return;
-
-    const focusable = projectModal.querySelectorAll(
-      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    );
-
-    if (!focusable.length) return;
-
-    const firstElement = focusable[0];
-    const lastElement = focusable[focusable.length - 1];
-
-    if (event.shiftKey && document.activeElement === firstElement) {
-      event.preventDefault();
-      lastElement.focus();
-    }
-
-    if (!event.shiftKey && document.activeElement === lastElement) {
-      event.preventDefault();
-      firstElement.focus();
-    }
+    projectModal.showModal();
+    projectModal.querySelector(".project-modal-dialog").scrollTop = 0;
   };
 
   const setupProjectModal = () => {
-    if (!projectModal || !portfolioGallery) return;
+    if (!projectModal) return;
 
-    portfolioGallery.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-project-modal]");
-
-      if (button) {
+    document.querySelectorAll("[data-project-modal]").forEach((button) => {
+      button.setAttribute("aria-haspopup", "dialog");
+      button.setAttribute("aria-controls", "project-modal");
+      button.addEventListener("click", () => {
         openProjectModal(button.dataset.projectModal, button);
-      }
+      });
     });
 
     projectModalCloseButtons.forEach((button) => {
       button.addEventListener("click", closeProjectModal);
     });
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !projectModal.hidden) {
-        closeProjectModal();
-        return;
-      }
-
-      if (!projectModal.hidden) {
-        trapProjectModalFocus(event);
-      }
+    let backdropPointerDown = false;
+    projectModal.addEventListener("pointerdown", (event) => {
+      backdropPointerDown = event.target === projectModal;
+    });
+    projectModal.addEventListener("click", (event) => {
+      if (event.target === projectModal && backdropPointerDown) closeProjectModal();
+      backdropPointerDown = false;
+    });
+    projectModal.addEventListener("close", () => {
+      projectModal.querySelectorAll("video").forEach((video) => video.pause());
+      document.body.classList.remove("modal-open");
+      lastProjectTrigger?.focus({ preventScroll: true });
+      lastProjectTrigger = null;
     });
   };
 
@@ -955,7 +957,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     menuLinks.forEach((link) => {
-      link.classList.toggle("active", link.getAttribute("href") === `#${currentId}`);
+      const isActive = link.getAttribute("href") === `#${currentId}`;
+      link.classList.toggle("active", isActive);
+      if (isActive) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
     });
   };
 
@@ -981,6 +986,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const setupReveal = () => {
     if (!revealItems.length) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     revealItems.forEach((item) => item.classList.add("reveal-pending"));
 

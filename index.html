@@ -17,6 +17,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <div class="site-bg" aria-hidden="true">
     <span class="map-line map-line-one"></span>
     <span class="map-line map-line-two"></span>
@@ -78,7 +79,7 @@
   <canvas class="cursor-smoke" data-cursor-smoke aria-hidden="true"></canvas>
   <span class="cursor-ring" data-cursor-ring aria-hidden="true"></span>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <section class="home page-section" id="home">
       <div class="hero-code-notes" aria-hidden="true">
         <span>// Developer focused</span>
@@ -96,10 +97,24 @@
           I build web applications and APIs with React, TypeScript, .NET, and Node.js.
           My experience spans GIS application development, AI agents, and workflow automation.
         </p>
+        <div class="capability-snapshot" aria-label="Explore engineering highlights">
+          <button type="button" data-project-modal="retail-inventory">
+            <strong>Full stack</strong>
+            <span>Interfaces, APIs, data</span>
+          </button>
+          <button type="button" data-project-modal="react-testing">
+            <strong>458 tests</strong>
+            <span>Recorded local run</span>
+          </button>
+          <button type="button" data-project-modal="ai-workflows">
+            <strong>AI workflows</strong>
+            <span>Build, test, review</span>
+          </button>
+        </div>
         <div class="hero-actions" aria-label="Primary actions">
-          <a href="#contact">Contact</a>
+          <a href="#portfolio">View Projects</a>
           <a href="img/resume.pdf" target="_blank" rel="noopener noreferrer">View CV (PDF)</a>
-          <a href="documents/Ahmad_Issa_CV.docx" download>Download Word CV</a>
+          <a href="#contact">Contact</a>
         </div>
       </div>
 
@@ -304,18 +319,21 @@
         <h2>Selected Projects</h2>
       </div>
 
-      <div class="filter-buttons reveal" aria-label="Project filters">
+      <p class="section-intro">Explore my contributions, technical decisions, and delivery context across client work, personal projects, and research.</p>
+      <div class="filter-buttons reveal" role="group" aria-label="Project filters">
         <button class="button filter-active" type="button" data-filter="all" aria-pressed="true">All Work</button>
         <button class="button" type="button" data-filter="software" aria-pressed="false">Full Stack</button>
         <button class="button" type="button" data-filter="web" aria-pressed="false">Frontend</button>
         <button class="button" type="button" data-filter="gis" aria-pressed="false">GIS</button>
+        <button class="button" type="button" data-filter="desktop" aria-pressed="false">Desktop</button>
         <button class="button" type="button" data-filter="ai" aria-pressed="false">AI Workflows</button>
         <button class="button" type="button" data-filter="testing" aria-pressed="false">Testing</button>
         <button class="button" type="button" data-filter="support" aria-pressed="false">Support</button>
         <button class="button" type="button" data-filter="research" aria-pressed="false">Research</button>
       </div>
+      <p class="filter-status" id="project-filter-status" role="status" aria-live="polite">Showing all 12 projects.</p>
 
-      <div class="portfolio-gallery">
+      <div class="portfolio-gallery" id="project-gallery" aria-describedby="project-filter-status">
         <article class="portfolio-box reveal" data-category="software web">
           <span class="portfolio-index">01</span>
           <div class="portfolio-content">
@@ -324,7 +342,7 @@
             <p>React storefront and NestJS APIs for product discovery, branch inventory, and validated checkout.</p>
             <div class="project-tags"><span>React</span><span>TypeScript</span><span>NestJS</span><span>PostgreSQL</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="retail-inventory" aria-label="View details: Retail and Inventory Application">View More</button>
+          <button type="button" class="readMore" data-project-modal="retail-inventory" aria-label="View details: Retail and Inventory Application">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="software web gis">
@@ -335,7 +353,7 @@
             <p>Bilingual activity history combining portal webhooks and audit records through .NET APIs and a React console.</p>
             <div class="project-tags"><span>ASP.NET Core</span><span>SQL Server</span><span>React</span><span>TypeScript</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="audit-activity" aria-label="View details: Audit and Activity Console">View More</button>
+          <button type="button" class="readMore" data-project-modal="audit-activity" aria-label="View details: Audit and Activity Console">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="web testing">
@@ -346,7 +364,7 @@
             <p>458 passing tests across 19 files, 97.44% statement coverage, and 13 defects reported to the application team.</p>
             <div class="project-tags"><span>Vitest</span><span>React Testing Library</span><span>MSW</span><span>axe-core</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="react-testing" aria-label="View details: React Application Test Suite">View More</button>
+          <button type="button" class="readMore" data-project-modal="react-testing" aria-label="View details: React Application Test Suite">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="desktop gis">
@@ -357,7 +375,7 @@
             <p>C# and WPF improvements for asset records, ArcGIS attachments, full-data searches, and Excel exports.</p>
             <div class="project-tags"><span>C#</span><span>.NET</span><span>WPF</span><span>ArcGIS REST</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="asset-desktop" aria-label="View details: Asset Management Desktop Application">View More</button>
+          <button type="button" class="readMore" data-project-modal="asset-desktop" aria-label="View details: Asset Management Desktop Application">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="gis web">
@@ -368,7 +386,7 @@
             <p>React and TypeScript widgets connecting request workflows, status counts, map filters, and PDF certificates.</p>
             <div class="project-tags"><span>React</span><span>TypeScript</span><span>Experience Builder</span><span>ArcGIS REST</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="experience-builder" aria-label="View details: ArcGIS Experience Builder Workflows">View More</button>
+          <button type="button" class="readMore" data-project-modal="experience-builder" aria-label="View details: ArcGIS Experience Builder Workflows">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="web">
@@ -379,7 +397,7 @@
             <p>Excel-backed directory for 2,208 organizations, with comparison, shortlists, and printable meeting briefs.</p>
             <div class="project-tags"><span>JavaScript</span><span>Python</span><span>SheetJS</span><span>Data validation</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="company-portal" aria-label="View details: Company Intelligence Portal">View More</button>
+          <button type="button" class="readMore" data-project-modal="company-portal" aria-label="View details: Company Intelligence Portal">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="ai">
@@ -390,7 +408,7 @@
             <p>Coordinated coding agents and AI systems for implementation, testing, research, review, and documentation.</p>
             <div class="project-tags"><span>Codex</span><span>Claude Code</span><span>Antigravity</span><span>Prompt engineering</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="ai-workflows" aria-label="View details: AI Agent Workflows and Automation">View More</button>
+          <button type="button" class="readMore" data-project-modal="ai-workflows" aria-label="View details: AI Agent Workflows and Automation">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="support gis">
@@ -401,7 +419,7 @@
             <p>Enterprise diagnostics and case ownership, recognized through multiple Excellent customer satisfaction surveys.</p>
             <div class="project-tags"><span>ArcGIS Enterprise</span><span>ArcGIS Online</span><span>RCA</span><span>SLA</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="esri-support" aria-label="View details: Esri Support and Platform Diagnostics">View More</button>
+          <button type="button" class="readMore" data-project-modal="esri-support" aria-label="View details: Esri Support and Platform Diagnostics">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="research">
@@ -412,7 +430,7 @@
             <p>Co-authored research comparing multimodal interfaces for in-vehicle safety.</p>
             <div class="project-tags"><span>IEEE</span><span>ASET 2025</span><span>AI</span><span>In-Vehicle Safety</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="virtual-assistant-safety" aria-label="View details: Evaluating a Virtual Assistant&#x27;s Effectiveness in Enhancing in-Vehicle Safety: A Comparative Study">View More</button>
+          <button type="button" class="readMore" data-project-modal="virtual-assistant-safety" aria-label="View details: Evaluating a Virtual Assistant&#x27;s Effectiveness in Enhancing in-Vehicle Safety: A Comparative Study">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="research gis">
@@ -423,7 +441,7 @@
             <p>IoT and machine learning concepts for environmental sensing and urban planning.</p>
             <div class="project-tags"><span>IoT</span><span>Machine Learning</span><span>Python</span><span>Waspmote IDE</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="smart-city" aria-label="View details: Smart City Optimization Platform">View More</button>
+          <button type="button" class="readMore" data-project-modal="smart-city" aria-label="View details: Smart City Optimization Platform">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="research">
@@ -434,7 +452,7 @@
             <p>Computer vision and motor control for line following and obstacle avoidance.</p>
             <div class="project-tags"><span>Python</span><span>OpenCV</span><span>Embedded Systems</span><span>Robotics</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="autonomous-car" aria-label="View details: Autonomous Smart Car Robot">View More</button>
+          <button type="button" class="readMore" data-project-modal="autonomous-car" aria-label="View details: Autonomous Smart Car Robot">View Details</button>
         </article>
 
         <article class="portfolio-box reveal" data-category="web">
@@ -445,16 +463,14 @@
             <p>Responsive portfolio with project filters, reusable dialogs, course certificates, and CV downloads.</p>
             <div class="project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive UI</span></div>
           </div>
-          <button type="button" class="readMore" data-project-modal="portfolio-site" aria-label="View details: Frontend Portfolio System">View More</button>
+          <button type="button" class="readMore" data-project-modal="portfolio-site" aria-label="View details: Frontend Portfolio System">View Details</button>
         </article>
       </div>
     </section>
 
-    <div class="project-modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"
-      hidden>
-      <div class="project-modal-backdrop" data-project-modal-close></div>
+    <dialog class="project-modal" id="project-modal" aria-labelledby="project-modal-title" aria-describedby="project-modal-category">
       <div class="project-modal-dialog" role="document">
-        <button type="button" class="project-modal-close" data-project-modal-close aria-label="Close project details">
+        <button type="button" class="project-modal-close" data-project-modal-close aria-label="Close project details" autofocus>
           <span aria-hidden="true">&times;</span>
         </button>
         <div class="project-modal-body">
@@ -463,7 +479,7 @@
           <div class="project-modal-content" id="project-modal-content"></div>
         </div>
       </div>
-    </div>
+    </dialog>
 
     <section class="skills page-section" id="skills">
       <div class="section-rule reveal">
@@ -475,26 +491,32 @@
         <article class="skill-card reveal">
           <h3>Frontend</h3>
           <div class="skill-pills"><span>React</span><span>TypeScript</span><span>JavaScript</span><span>HTML5</span><span>CSS/SCSS</span><span>Vite</span><span>Tailwind CSS</span><span>Arabic/English RTL</span></div>
+          <button class="skill-example" type="button" data-project-modal="retail-inventory">Explore the retail application <span aria-hidden="true">&rarr;</span></button>
         </article>
         <article class="skill-card reveal">
           <h3>Backend and Data</h3>
           <div class="skill-pills"><span>C#</span><span>ASP.NET Core</span><span>Node.js</span><span>NestJS</span><span>Express</span><span>REST APIs</span><span>EF Core</span><span>SQL Server</span><span>PostgreSQL</span><span>Prisma</span><span>Python</span></div>
+          <button class="skill-example" type="button" data-project-modal="audit-activity">Explore the audit console <span aria-hidden="true">&rarr;</span></button>
         </article>
         <article class="skill-card reveal">
           <h3>GIS and Desktop</h3>
           <div class="skill-pills"><span>ArcGIS Experience Builder</span><span>ArcGIS Maps SDK for JavaScript</span><span>ArcGIS REST</span><span>ArcGIS Online</span><span>ArcGIS Enterprise</span><span>WPF/.NET</span></div>
+          <button class="skill-example" type="button" data-project-modal="asset-desktop">Explore the asset application <span aria-hidden="true">&rarr;</span></button>
         </article>
         <article class="skill-card reveal">
           <h3>AI Tools and Automation</h3>
           <div class="skill-pills"><span>OpenAI Codex</span><span>Claude Code</span><span>Antigravity</span><span>AI Models</span><span>Prompt Engineering</span><span>Context Engineering</span><span>Agent Orchestration</span><span>n8n Prototypes</span><span>Model Context Protocol (MCP)</span></div>
+          <button class="skill-example" type="button" data-project-modal="ai-workflows">Explore agent workflows <span aria-hidden="true">&rarr;</span></button>
         </article>
         <article class="skill-card reveal">
           <h3>Testing and Delivery</h3>
           <div class="skill-pills"><span>Vitest</span><span>React Testing Library</span><span>MSW</span><span>xUnit</span><span>Jest</span><span>Git/GitHub</span><span>Azure DevOps/TFS</span><span>IIS</span><span>Swagger/OpenAPI</span><span>Release Verification</span></div>
+          <button class="skill-example" type="button" data-project-modal="react-testing">Explore the React test suite <span aria-hidden="true">&rarr;</span></button>
         </article>
         <article class="skill-card reveal">
           <h3>Support and Reliability</h3>
           <div class="skill-pills"><span>Enterprise Diagnostics</span><span>Log Analysis</span><span>Root Cause Analysis</span><span>SLA Management</span><span>Escalations</span><span>Security Assessments</span><span>Technical Documentation</span></div>
+          <button class="skill-example" type="button" data-project-modal="esri-support">Explore Esri support work <span aria-hidden="true">&rarr;</span></button>
         </article>
       </div>
     </section>
@@ -515,6 +537,7 @@
           <a target="_blank" href="https://www.linkedin.com/in/ahmad-issa-81772528b/"
             rel="noopener noreferrer">LinkedIn</a>
           <a href="tel:+962791118973">+962 79 111 8973</a>
+          <a href="documents/Ahmad_Issa_CV.docx" download>Download Word CV</a>
           <a href="https://maps.google.com/?q=Amman%2C%20Jordan" target="_blank" rel="noopener noreferrer">Amman,
             Jordan</a>
         </div>
