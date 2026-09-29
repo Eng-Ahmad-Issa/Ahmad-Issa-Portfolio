@@ -26,241 +26,365 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeStorageKey = "ahmad-issa-theme";
 
   const projectDetails = {
-    "government-gis": {
-      category: "GIS Development",
-      title: "Government GIS Dashboards",
-      summary: [
-        "Frontend delivery for ArcGIS dashboard and web mapping workflows. This summary stays client-neutral because project data and screenshots are confidential.",
-        "The work focused on interface structure, map interaction, filtering, responsive layouts, and ArcGIS service integration for operational users.",
+    "retail-inventory": {
+      "category": "Personal project / 2025 to 2026",
+      "title": "Retail and Inventory Application",
+      "summary": [
+        "Built a React and TypeScript storefront with a NestJS backend, PostgreSQL, and Prisma. The application supports product variants, branch inventory, search, filters, cart state, and persistent orders.",
+        "Development includes a read-only connection to an external inventory platform. Orders await stock confirmation, and the application is under development."
       ],
-      sections: [
+      "sections": [
         {
-          title: "Work Summary",
-          items: [
-            "Customized ArcGIS Experience Builder interfaces for dashboard workflows.",
-            "Connected ArcGIS REST services, Feature Layers, and Web Maps to interactive views.",
-            "Built layouts for desktop and mobile use across office and field contexts.",
-            "Cleaned frontend components to improve maintenance and reduce unnecessary load behavior.",
-          ],
-        },
-        {
-          title: "Privacy Boundary",
-          items: [
-            "No client names, data records, screenshots, coordinates, or internal workflows appear in this portfolio.",
-          ],
-        },
+          "title": "Contributions",
+          "items": [
+            "Implemented product APIs, database models, and migrations for inventory transactions, orders, and order-line snapshots.",
+            "Added paginated imports and scheduled synchronization with duplicate-safe transaction updates and protection against overlapping runs.",
+            "Validated prices, discounts, shipping, and cached branch stock on the server. Used idempotency keys to prevent duplicate orders.",
+            "Documented APIs with Swagger/OpenAPI and added frontend, backend, and API tests."
+          ]
+        }
       ],
-      tags: [
-        "ArcGIS Experience Builder",
-        "ArcGIS REST services",
-        "JavaScript",
-        "TypeScript",
+      "tags": [
         "React",
+        "TypeScript",
+        "NestJS",
+        "PostgreSQL",
+        "Prisma"
+      ]
+    },
+    "audit-activity": {
+      "category": "Client team project / Aug to Sep 2026",
+      "title": "Audit and Activity Console",
+      "summary": [
+        "Developed an audit service and React/TypeScript console within a government spatial data portal project. ASP.NET Core, Entity Framework Core, and SQL Server combine webhook events and portal audit records into a searchable activity history.",
+        "Implemented and tested the service, deployed a development build to IIS, and prepared technical handover documentation."
       ],
+      "sections": [
+        {
+          "title": "Contributions",
+          "items": [
+            "Migrated persistence from SQLite to SQL Server and separated the owned schema from read access to the portal database.",
+            "Implemented webhook signature checks, event deduplication, user attribution, and background processing.",
+            "Built server-side pagination, filtering, Arabic/English localization, RTL layouts, polling, and JSON export.",
+            "Added xUnit tests using SQL Server LocalDB, including database behavior and migration checks."
+          ]
+        }
+      ],
+      "tags": [
+        "ASP.NET Core",
+        "SQL Server",
+        "React",
+        "TypeScript",
+        "xUnit"
+      ]
+    },
+    "react-testing": {
+      "category": "Client team project / Aug 2026",
+      "title": "React Application Test Suite",
+      "summary": [
+        "Created an isolated test workspace for an existing React administration application. Tests read the application source without modifying the owning team's code.",
+        "The recorded local run passed 458 tests across 19 files, with 97.44% statement coverage and 92.57% branch coverage."
+      ],
+      "sections": [
+        {
+          "title": "Contributions",
+          "items": [
+            "Prepared a risk-ranked test plan around application behavior and user workflows.",
+            "Used Vitest, React Testing Library, user-event, MSW, and jsdom for component and API behavior checks.",
+            "Included accessibility checks with axe-core and documented 13 defects for the owning developers."
+          ]
+        }
+      ],
+      "tags": [
+        "Vitest",
+        "React Testing Library",
+        "MSW",
+        "axe-core"
+      ]
+    },
+    "asset-desktop": {
+      "category": "Client application / Apr to Sep 2026",
+      "title": "Asset Management Desktop Application",
+      "summary": [
+        "Maintained and extended a C#/.NET WPF application for equipment, personnel, and mobilization records connected to ArcGIS feature services.",
+        "Work covered client-reported defects, data loading, attachment workflows, and MSI installer releases."
+      ],
+      "sections": [
+        {
+          "title": "Contributions",
+          "items": [
+            "Added paging beyond the 2,000-record service limit for full-data search and export.",
+            "Fixed attachment upload, replacement, deletion, field mapping, and refresh behavior.",
+            "Used cached identifier lookup and cancellable, versioned loads to prevent stale data appearing during table changes.",
+            "Reviewed runtime configuration, packaged release files, installer dependencies, and endpoint-security launch issues."
+          ]
+        }
+      ],
+      "tags": [
+        "C#",
+        ".NET",
+        "WPF",
+        "ArcGIS REST",
+        "MSI"
+      ]
     },
     "experience-builder": {
-      category: "Frontend and Web GIS",
-      title: "Custom Experience Builder Widgets",
-      summary: [
-        "Reusable React and TypeScript widget development for ArcGIS Experience Builder Developer Edition, focused on filtering, map interaction, and service-driven UI behavior.",
-        "The work aligns with Esri widget patterns while keeping client delivery details private.",
+      "category": "Client applications / Web GIS development",
+      "title": "ArcGIS Experience Builder Workflows",
+      "summary": [
+        "Developed and maintained custom Experience Builder widgets for operational GIS applications, using React, TypeScript, and ArcGIS services.",
+        "Extended inherited applications with request-management dashboards, forms, assignment controls, document-upload interfaces, and bilingual layouts."
       ],
-      sections: [
+      "sections": [
         {
-          title: "Key Contributions",
-          items: [
-            "Built modular widget logic with React, TypeScript, JSX, and Jimu conventions.",
-            "Connected widgets with ArcGIS data sources, Web Maps, and Feature Layer workflows.",
-            "Supported filtering, query behavior, and map-centric user interactions.",
-            "Organized components and styles for reuse across GIS applications.",
-          ],
-        },
+          "title": "Contributions",
+          "items": [
+            "Unified status classification across request lists, counters, charts, and map features, with focused tests.",
+            "Synchronized map and table filters and guarded asynchronous tab changes against outdated results.",
+            "Worked on PDF certificates, date handling, portal migration, and API field mappings.",
+            "Compared source, release packages, and deployed files to investigate inconsistent application behavior."
+          ]
+        }
       ],
-      tags: [
-        "Experience Builder Developer Edition",
-        "Jimu",
+      "tags": [
         "React",
         "TypeScript",
-        "Web Maps",
+        "Experience Builder",
+        "ArcGIS REST"
+      ]
+    },
+    "company-portal": {
+      "category": "Internal tool / Sep 2026",
+      "title": "Company Intelligence Portal",
+      "summary": [
+        "Built a single-page directory over an Excel master workbook, with search, filters, organization details, comparisons, and saved shortlists.",
+        "The reviewed dataset contains 2,208 organizations. Python and JavaScript tooling supports enrichment, duplicate matching, and validation."
       ],
+      "sections": [
+        {
+          "title": "Contributions",
+          "items": [
+            "Kept the workbook as the source of truth and stored shortlist selections in the browser.",
+            "Added overview charts, printable meeting briefs, and backup and restore for saved workspace selections.",
+            "Consolidated branches and normalized records while preserving identifiers and relationships."
+          ]
+        }
+      ],
+      "tags": [
+        "JavaScript",
+        "Python",
+        "SheetJS",
+        "Data validation"
+      ]
+    },
+    "ai-workflows": {
+      "category": "Applied AI tools and automation",
+      "title": "AI Agent Workflows and Automation",
+      "summary": [
+        "Use OpenAI Codex, Claude Code, and Antigravity across software development and research. Prepare structured prompts, reusable project instructions, shared context, and implementation handoffs.",
+        "Coordinate agents across backend, frontend, QA, and documentation, and compare results across AI systems through code review and application checks."
+      ],
+      "sections": [
+        {
+          "title": "Contributions",
+          "items": [
+            "Define the business problem, architecture, file scope, constraints, acceptance criteria, and verification steps before implementation.",
+            "Use shared files and staged handoffs to coordinate agents across development tasks.",
+            "Review generated code through tests, browser checks, build output, and follow-up corrections.",
+            "Maintain a Git-backed collection of reusable instructions, configuration, and adapted third-party skills."
+          ]
+        },
+        {
+          "title": "Automation prototyping",
+          "items": [
+            "Explored n8n in Docker, local AI model runtimes, Telegram workflows, and an MCP gateway connecting automation tools with a coding agent."
+          ]
+        }
+      ],
+      "tags": [
+        "Codex",
+        "Claude Code",
+        "Antigravity",
+        "Prompt engineering",
+        "Agent orchestration"
+      ]
     },
     "esri-support": {
-      category: "Technical Support",
-      title: "Esri Support and Platform Diagnostics",
-      summary: [
-        "Technical support work from Esri Support Center workflows at gistec, focused on diagnosing platform issues and restoring reliable access.",
-        "This experience connects development work with production behavior, access control, service health, data reliability, and supportability.",
+      "category": "Esri Support Center EMEA",
+      "title": "Esri Support and Platform Diagnostics",
+      "summary": [
+        "Supported ArcGIS Online and ArcGIS Enterprise customers through the Esri Support Center EMEA at gistec, covering Europe, the Middle East, and Africa.",
+        "Received multiple Excellent customer satisfaction survey ratings. Feedback highlighted quick diagnosis, clear explanations, and practical troubleshooting guidance."
       ],
-      sections: [
+      "sections": [
         {
-          title: "Support Scope",
-          items: [
-            "Investigated issues across ArcGIS Online, ArcGIS Enterprise, data access, configuration, maps, and services.",
-            "Managed tickets through prioritization, customer communication, escalation, and follow-up.",
-            "Reviewed logs, authentication behavior, permissions, data sources, and service responses.",
-            "Prepared case notes, RCA summaries, operational reports, and reusable technical guidance.",
-          ],
-        },
+          "title": "Contributions",
+          "items": [
+            "Investigated services, data, configuration, authentication, and permissions using logs and API responses.",
+            "Prioritized cases against service-level agreements and coordinated escalation and customer follow-up.",
+            "Documented root causes, resolution steps, and reusable technical guidance.",
+            "Prepared knowledge-sharing material on ArcGIS Enterprise antivirus configuration, platform stability, and Experience Builder."
+          ]
+        }
       ],
-      tags: [
-        "ArcGIS Online",
+      "tags": [
         "ArcGIS Enterprise",
-        "ArcGIS services",
-        "Logs",
+        "ArcGIS Online",
         "RCA",
-      ],
+        "SLA",
+        "CSAT"
+      ]
     },
     "virtual-assistant-safety": {
-      category: "Research Publication",
-      title: "Evaluating a Virtual Assistant's Effectiveness in Enhancing in-Vehicle Safety: A Comparative Study",
-      summary: [
+      "category": "Research Publication",
+      "title": "Evaluating a Virtual Assistant's Effectiveness in Enhancing in-Vehicle Safety: A Comparative Study",
+      "summary": [
         "IEEE-published ASET 2025 conference paper on multimodal in-vehicle safety interfaces for driver attention, response, and compliance.",
-        "The study compared static visual alerts, natural voice alerts, and avatar-based guidance under simulated driving conditions.",
+        "The study compared static visual alerts, natural voice alerts, and avatar-based guidance under simulated driving conditions."
       ],
-      sections: [
+      "sections": [
         {
-          title: "Publication Details",
-          items: [
+          "title": "Publication Details",
+          "items": [
             "Authors include Luqman Ali, Hamad Aljassmi, Ahmad Ghaleb Issa, Fahed Saghir, Omar Aldhaheri, Mohamad Razouk, Zayed Alhammadi, and Fady Alnajjar.",
             "Published in 2025 Advances in Science and Engineering Technology International Conferences, ASET.",
             "Conference location: Dubai, United Arab Emirates.",
-            "DOI: 10.1109/ASET66891.2025.11427955.",
-          ],
+            "DOI: 10.1109/ASET66891.2025.11427955."
+          ]
         },
         {
-          title: "Research Focus",
-          items: [
+          "title": "Research Focus",
+          "items": [
             "Evaluated driver reaction time, compliance, user satisfaction, and communication mode effectiveness.",
-            "Connected AI virtual assistant design with safer in-vehicle human-machine interaction.",
-          ],
-        },
+            "Connected AI virtual assistant design with safer in-vehicle human-machine interaction."
+          ]
+        }
       ],
-      links: [
+      "links": [
         {
-          label: "Open DOI: 10.1109/ASET66891.2025.11427955",
-          href: "https://doi.org/10.1109/ASET66891.2025.11427955",
-        },
+          "label": "Open DOI: 10.1109/ASET66891.2025.11427955",
+          "href": "https://doi.org/10.1109/ASET66891.2025.11427955"
+        }
       ],
-      tags: [
+      "tags": [
         "IEEE",
         "ASET 2025",
         "AI",
         "In-Vehicle Safety",
-        "Human-Machine Interaction",
-      ],
+        "Human-Machine Interaction"
+      ]
     },
     "smart-city": {
-      category: "Research",
-      title: "Smart City Optimization Platform",
-      summary: [
+      "category": "Research",
+      "title": "Smart City Optimization Platform",
+      "summary": [
         "Applied research project using IoT sensors and machine learning concepts for urban planning, environmental sensing, and decision support.",
-        "The project used sensor data, cloud communication, and a simple user interface to present environmental insights.",
+        "The project used sensor data, cloud communication, and a simple user interface to present environmental insights."
       ],
-      sections: [
+      "sections": [
         {
-          title: "Project Highlights",
-          items: [
+          "title": "Project Highlights",
+          "items": [
             "Collected sensor readings with IoT evaluator kits and embedded hardware.",
             "Designed a system architecture using Waspmote boards, ATmega1281, and Digi XBee modules.",
             "Applied machine learning concepts for predictive analysis and resource planning.",
-            "Built a user-facing interface to visualize readings and support urban decisions.",
-          ],
-        },
+            "Built a user-facing interface to visualize readings and support urban decisions."
+          ]
+        }
       ],
-      media: [
+      "media": [
         {
-          type: "image",
-          src: "img/portfolio/project3A.webp",
-          alt: "Smart city optimization research poster",
-          caption: "Research poster for the IoT and machine learning smart city platform.",
+          "type": "image",
+          "src": "img/portfolio/project3A.webp",
+          "alt": "Smart city optimization research poster",
+          "caption": "Research poster for the IoT and machine learning smart city platform."
         },
         {
-          type: "image",
-          src: "img/portfolio/project3B.webp",
-          alt: "IoT evaluator kit hardware",
-          caption: "IoT hardware used for sensing and data collection.",
-        },
+          "type": "image",
+          "src": "img/portfolio/project3B.webp",
+          "alt": "IoT evaluator kit hardware",
+          "caption": "IoT hardware used for sensing and data collection."
+        }
       ],
-      tags: [
+      "tags": [
         "IoT",
         "Machine Learning",
         "Python",
         "Waspmote IDE",
-        "Digi XCTU",
-      ],
+        "Digi XCTU"
+      ]
     },
     "autonomous-car": {
-      category: "Embedded Systems",
-      title: "Autonomous Smart Car Robot",
-      summary: [
+      "category": "Embedded Systems",
+      "title": "Autonomous Smart Car Robot",
+      "summary": [
         "Embedded robotics prototype for line following and obstacle avoidance using real-time computer vision and motor control.",
-        "The project combined camera input, OpenCV processing, centroid tracking, and robot movement logic.",
+        "The project combined camera input, OpenCV processing, centroid tracking, and robot movement logic."
       ],
-      sections: [
+      "sections": [
         {
-          title: "Project Highlights",
-          items: [
+          "title": "Project Highlights",
+          "items": [
             "Processed a live video feed to detect path edges and navigation direction.",
             "Adjusted motor control based on path position and obstacle behavior.",
             "Used OpenCV for grayscale conversion, thresholding, contour detection, and decision logic.",
-            "Tested embedded robotics behavior under changing path and obstacle conditions.",
-          ],
-        },
+            "Tested embedded robotics behavior under changing path and obstacle conditions."
+          ]
+        }
       ],
-      media: [
+      "media": [
         {
-          type: "image",
-          src: "img/portfolio/project2A.webp",
-          alt: "Autonomous car coding setup",
-          caption: "Development setup for computer vision and robot control.",
+          "type": "image",
+          "src": "img/portfolio/project2A.webp",
+          "alt": "Autonomous car coding setup",
+          "caption": "Development setup for computer vision and robot control."
         },
         {
-          type: "video",
-          src: "img/portfolio/project2C.mp4",
-          caption: "Prototype demonstration video.",
-        },
+          "type": "video",
+          "src": "img/portfolio/project2C.mp4",
+          "caption": "Prototype demonstration video."
+        }
       ],
-      tags: [
+      "tags": [
         "Python",
         "OpenCV",
         "Embedded Systems",
         "Robotics",
-        "Computer Vision",
-      ],
+        "Computer Vision"
+      ]
     },
     "portfolio-site": {
-      category: "Web",
-      title: "Frontend Portfolio System",
-      summary: [
-        "Static HTML, CSS, and JavaScript portfolio refined around a full stack developer story, senior front-end strength, and practical delivery.",
-        "The project section now uses a single-page modal flow, which reduces page sprawl and keeps selected work easier to maintain.",
+      "category": "Web",
+      "title": "Frontend Portfolio System",
+      "summary": [
+        "Built and maintained this portfolio using HTML, CSS, and JavaScript, with responsive layouts, theme switching, project filters, and reusable project dialogs.",
+        "Project details, course certificates, and PDF and Word CV downloads share one page."
       ],
-      sections: [
+      "sections": [
         {
-          title: "Current Improvements",
-          items: [
-            "Updated content around full stack development, front-end delivery, GIS experience, and support depth.",
-            "Moved project details into one reusable modal pattern.",
-            "Kept confidential client work general while preserving the technical value.",
-            "Improved the project section for faster scanning and simpler maintenance.",
-          ],
-        },
+          "title": "Features",
+          "items": [
+            "Responsive navigation, keyboard-accessible project dialogs, and saved theme preferences.",
+            "Project filters for full stack development, frontend, GIS, AI, testing, support, and research.",
+            "Updated professional history, customer feedback excerpts, and training certificates."
+          ]
+        }
       ],
-      media: [
+      "media": [
         {
-          type: "video",
-          src: "img/portfolio/project6.mp4",
-          caption: "Portfolio walkthrough media from the existing project assets.",
-        },
+          "type": "video",
+          "src": "img/portfolio/project6.mp4",
+          "caption": "Walkthrough of an earlier portfolio version."
+        }
       ],
-      tags: [
+      "tags": [
         "HTML",
         "CSS",
         "JavaScript",
         "Responsive UI",
-        "Portfolio",
-      ],
-    },
+        "Portfolio"
+      ]
+    }
   };
 
   const closeMenu = () => {
@@ -358,7 +482,10 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", () => {
         const filter = button.dataset.filter;
 
-        filterButtons.forEach((item) => item.classList.remove("filter-active"));
+        filterButtons.forEach((item) => {
+          item.classList.remove("filter-active");
+          item.setAttribute("aria-pressed", String(item === button));
+        });
         button.classList.add("filter-active");
 
         cards.forEach((card) => {
