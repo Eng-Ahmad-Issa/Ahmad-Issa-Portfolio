@@ -19,8 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const revealItems = document.querySelectorAll(".reveal");
   const header = document.querySelector("[data-header]");
   const themeToggle = document.querySelector("[data-theme-toggle]");
-  const cursorSmoke = document.querySelector("[data-cursor-smoke]");
-  const cursorRing = document.querySelector("[data-cursor-ring]");
   const mobileMenu = window.matchMedia("(max-width: 680px)");
 
   let scrollTicking = false;
@@ -715,219 +713,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const setupCursorEffect = () => {
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (!cursorSmoke || !cursorRing || !finePointer || reducedMotion) return;
-
-    const context = cursorSmoke.getContext("2d");
-    if (!context) return;
-
-    const particles = [];
-    const pointer = {
-      active: false,
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-      targetX: window.innerWidth / 2,
-      targetY: window.innerHeight / 2,
-      lastX: window.innerWidth / 2,
-      lastY: window.innerHeight / 2,
-      ringX: -120,
-      ringY: -120,
-    };
-
-    let canvasWidth = 0;
-    let canvasHeight = 0;
-    let animationFrame = 0;
-
-    const resizeCanvas = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvasWidth = window.innerWidth;
-      canvasHeight = window.innerHeight;
-      cursorSmoke.width = Math.round(canvasWidth * dpr);
-      cursorSmoke.height = Math.round(canvasHeight * dpr);
-      cursorSmoke.style.width = `${canvasWidth}px`;
-      cursorSmoke.style.height = `${canvasHeight}px`;
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const moveRing = () => {
-      const ringSize = cursorRing.offsetWidth || 30;
-      cursorRing.style.transform = `translate3d(${pointer.ringX - ringSize / 2}px, ${pointer.ringY - ringSize / 2}px, 0)`;
-    };
-
-    const createParticle = (x, y, velocityX, velocityY, speed) => {
-      const drift = Math.max(0.35, Math.min(speed / 38, 1.7));
-      const maxLife = 46 + Math.random() * 24;
-      particles.push({
-        x: x + (Math.random() - 0.5) * 8,
-        y: y + (Math.random() - 0.5) * 8,
-        velocityX: -velocityX * 0.006 + (Math.random() - 0.5) * drift,
-        velocityY: -velocityY * 0.006 + (Math.random() - 0.5) * drift,
-        size: 20 + Math.random() * 34 + Math.min(speed * 0.07, 22),
-        stretch: 1.7 + Math.random() * 2.2,
-        angle: Math.atan2(velocityY || 0.01, velocityX || 0.01) + (Math.random() - 0.5) * 0.55,
-        spin: (Math.random() - 0.5) * 0.012,
-        life: maxLife,
-        maxLife,
-        alpha: 0.08 + Math.random() * 0.08,
-      });
-
-      if (particles.length > 100) {
-        particles.splice(0, particles.length - 100);
-      }
-    };
-
-    const emitParticles = (event) => {
-      const velocityX = event.clientX - pointer.lastX;
-      const velocityY = event.clientY - pointer.lastY;
-      const speed = Math.hypot(velocityX, velocityY);
-      const count = Math.min(4, Math.max(1, Math.ceil(speed / 34)));
-
-      for (let index = 0; index < count; index += 1) {
-        const step = count === 1 ? 1 : index / (count - 1);
-        createParticle(
-          pointer.lastX + velocityX * step,
-          pointer.lastY + velocityY * step,
-          velocityX,
-          velocityY,
-          speed
-        );
-      }
-
-      pointer.lastX = event.clientX;
-      pointer.lastY = event.clientY;
-    };
-
-    const setPointer = (event) => {
-      if (!pointer.active) {
-        pointer.active = true;
-        pointer.lastX = event.clientX;
-        pointer.lastY = event.clientY;
-        pointer.x = event.clientX;
-        pointer.y = event.clientY;
-        pointer.ringX = event.clientX;
-        pointer.ringY = event.clientY;
-        moveRing();
-        document.body.classList.add("cursor-active");
-      }
-
-      pointer.targetX = event.clientX;
-      pointer.targetY = event.clientY;
-      pointer.x = event.clientX;
-      pointer.y = event.clientY;
-      pointer.ringX = event.clientX;
-      pointer.ringY = event.clientY;
-      moveRing();
-      emitParticles(event);
-    };
-
-    const isInteractiveTarget = (target) =>
-      target instanceof Element &&
-      Boolean(target.closest("a, button, [role='button'], input, textarea, select, summary"));
-
-    const drawParticle = (particle, isLightTheme) => {
-      const progress = Math.max(particle.life / particle.maxLife, 0);
-      const alpha = particle.alpha * progress;
-      const color = isLightTheme ? "22, 22, 22" : "255, 255, 255";
-      const radius = particle.size * particle.stretch;
-      const glow = context.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, radius);
-
-      glow.addColorStop(0, `rgba(${color}, ${alpha * 0.7})`);
-      glow.addColorStop(0.22, `rgba(${color}, ${alpha * 0.3})`);
-      glow.addColorStop(0.6, `rgba(${color}, ${alpha * 0.08})`);
-      glow.addColorStop(1, `rgba(${color}, 0)`);
-
-      context.save();
-      context.fillStyle = glow;
-      context.beginPath();
-      context.ellipse(
-        particle.x,
-        particle.y,
-        radius,
-        particle.size * 0.36,
-        particle.angle,
-        0,
-        Math.PI * 2
-      );
-      context.fill();
-      context.restore();
-    };
-
-    const drawCursorGlow = (isLightTheme) => {
-      if (!pointer.active) return;
-
-      const color = isLightTheme ? "22, 22, 22" : "255, 255, 255";
-      const glow = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 40);
-      glow.addColorStop(0, `rgba(${color}, ${isLightTheme ? 0.14 : 0.28})`);
-      glow.addColorStop(0.2, `rgba(${color}, ${isLightTheme ? 0.08 : 0.15})`);
-      glow.addColorStop(0.52, `rgba(${color}, ${isLightTheme ? 0.03 : 0.06})`);
-      glow.addColorStop(1, `rgba(${color}, 0)`);
-
-      context.fillStyle = glow;
-      context.beginPath();
-      context.arc(pointer.x, pointer.y, 40, 0, Math.PI * 2);
-      context.fill();
-    };
-
-    const draw = () => {
-      context.clearRect(0, 0, canvasWidth, canvasHeight);
-
-      const isLightTheme = documentElement.dataset.theme === "light";
-      context.globalCompositeOperation = "source-over";
-
-      for (let index = particles.length - 1; index >= 0; index -= 1) {
-        const particle = particles[index];
-        particle.life -= 1;
-        particle.x += particle.velocityX;
-        particle.y += particle.velocityY;
-        particle.angle += particle.spin;
-        particle.velocityX *= 0.96;
-        particle.velocityY *= 0.96;
-
-        if (particle.life <= 0) {
-          particles.splice(index, 1);
-        } else {
-          drawParticle(particle, isLightTheme);
-        }
-      }
-
-      drawCursorGlow(isLightTheme);
-      animationFrame = window.requestAnimationFrame(draw);
-    };
-
-    document.body.classList.add("has-cursor-effect");
-    resizeCanvas();
-    draw();
-
-    window.addEventListener("resize", resizeCanvas);
-    window.addEventListener("pointermove", setPointer, { passive: true });
-    window.addEventListener("pointerdown", () => document.body.classList.add("cursor-press"));
-    window.addEventListener("pointerup", () => document.body.classList.remove("cursor-press"));
-    window.addEventListener("pointerleave", () => {
-      pointer.active = false;
-      document.body.classList.remove("cursor-active", "cursor-link");
-    });
-
-    document.addEventListener("pointerover", (event) => {
-      document.body.classList.toggle("cursor-link", isInteractiveTarget(event.target));
-    });
-
-    document.addEventListener("pointerout", (event) => {
-      if (isInteractiveTarget(event.target)) {
-        document.body.classList.remove("cursor-link");
-      }
-    });
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        window.cancelAnimationFrame(animationFrame);
-      } else {
-        animationFrame = window.requestAnimationFrame(draw);
-      }
-    });
-  };
 
   const updateHeader = () => {
     header?.classList.toggle("is-scrolled", window.scrollY > 24);
@@ -941,7 +726,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollValue = calcHeight > 0 ? Math.round((pos * 100) / calcHeight) : 0;
 
     scrollProgress.style.display = pos > 100 ? "grid" : "none";
-    scrollProgress.style.background = `conic-gradient(var(--cyan) ${scrollValue}%, rgba(255, 255, 255, 0.12) ${scrollValue}%)`;
+    scrollProgress.style.background = `conic-gradient(var(--accent-text) ${scrollValue}%, var(--line-soft) ${scrollValue}%)`;
   };
 
   const updateActiveMenu = () => {
@@ -980,7 +765,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!scrollProgress) return;
 
     scrollProgress.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const reduceMotion = documentElement.dataset.motion === "off" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "instant" : "smooth" });
     });
   };
 
@@ -1015,7 +801,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   setupThemeToggle();
-  setupCursorEffect();
   setupMenu();
   setupAboutTabs();
   setupPortfolioFilter();
