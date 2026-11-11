@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="Ahmad Issa, Full Stack Developer in Amman. React, TypeScript, .NET, Node.js, GIS applications, AI agents, workflow automation, and Esri EMEA support experience." />
+    content="Ahmad Issa, Full Stack Developer in Amman. Web and GIS applications, .NET and Node.js APIs, and LLM tool-calling agents with React and TypeScript, plus Esri Support Center EMEA experience." />
   <title>Ahmad Issa | Full Stack Developer</title>
   <link rel="canonical" href="https://eng-ahmad-issa.github.io/Ahmad-Issa-Portfolio/" />
   <meta property="og:title" content="Ahmad Issa | Full Stack Developer" />
-  <meta property="og:description" content="Web applications, .NET and Node.js APIs, GIS development, AI agents, and workflow automation." />
+  <meta property="og:description" content="Web and GIS applications, .NET and Node.js APIs, LLM tool-calling agents, and workflow automation." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://eng-ahmad-issa.github.io/Ahmad-Issa-Portfolio/" />
   <link rel="stylesheet" href="style.css" />
@@ -87,8 +87,9 @@
         </h1>
         <p class="hero-role">Full Stack Developer</p>
         <p class="hero-summary">
-          I build web applications and APIs with React, TypeScript, .NET, and Node.js.
-          My experience spans GIS application development, AI agents, and workflow automation.
+          I build web and GIS applications, the APIs behind them, and LLM tool-calling agents
+          with React, TypeScript, .NET, and Node.js. I verify the work with automated tests
+          and draw on enterprise troubleshooting at the Esri Support Center EMEA.
         </p>
         <div class="capability-snapshot" aria-label="Explore engineering highlights">
           <button type="button" data-project-modal="retail-inventory">
@@ -99,9 +100,9 @@
             <strong>458 tests</strong>
             <span>Recorded local run</span>
           </button>
-          <button type="button" data-project-modal="ai-workflows">
-            <strong>AI workflows</strong>
-            <span>Build, test, review</span>
+          <button type="button" data-project-modal="exb-ai-agent">
+            <strong>27 tools</strong>
+            <span>LLM agent, proof of concept</span>
           </button>
         </div>
         <div class="hero-actions" aria-label="Primary actions">
@@ -182,6 +183,7 @@
       <section class="pattern-studio" data-pattern-studio aria-labelledby="studio-title" hidden>
         <div class="studio-heading">
           <h2 id="studio-title"><span aria-hidden="true">✳</span> Pattern studio</h2>
+          <p class="studio-readout" data-studio-readout aria-hidden="true"></p>
           <button type="button" class="studio-toggle" data-studio-toggle aria-expanded="false" aria-controls="studio-controls">
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h5m4 0h5M3 14h9m4 0h1"/><circle cx="10" cy="6" r="2"/><circle cx="14" cy="14" r="2"/></svg>
             Customize
@@ -195,7 +197,8 @@
           <fieldset>
             <legend>Pattern</legend>
             <div class="studio-options">
-              <button type="button" data-studio-pattern="waves" aria-pressed="true">Waves</button>
+              <button type="button" data-studio-pattern="terrain" aria-pressed="true">Terrain</button>
+              <button type="button" data-studio-pattern="waves" aria-pressed="false">Waves</button>
               <button type="button" data-studio-pattern="orbits" aria-pressed="false">Orbits</button>
             </div>
           </fieldset>
@@ -205,24 +208,26 @@
               <button type="button" data-studio-palette="prism" aria-pressed="true"><span class="swatch-prism" aria-hidden="true"></span>Prism</button>
               <button type="button" data-studio-palette="aurora" aria-pressed="false"><span class="swatch-aurora" aria-hidden="true"></span>Aurora</button>
               <button type="button" data-studio-palette="sunset" aria-pressed="false"><span class="swatch-sunset" aria-hidden="true"></span>Sunset</button>
+              <button type="button" data-studio-palette="ember" aria-pressed="false"><span class="swatch-ember" aria-hidden="true"></span>Ember</button>
             </div>
           </fieldset>
           <div class="studio-range-label"><label for="studio-density">Density</label><output for="studio-density" data-studio-density-output aria-hidden="true">26 lines</output></div>
           <input type="range" id="studio-density" min="12" max="40" step="2" value="26" aria-valuetext="26 lines">
-          <div class="studio-range-label"><label for="studio-curve">Curve strength</label><output for="studio-curve" data-studio-curve-output aria-hidden="true">65%</output></div>
+          <div class="studio-range-label"><label for="studio-curve" data-studio-curve-label>Relief</label><output for="studio-curve" data-studio-curve-output aria-hidden="true">65%</output></div>
           <input type="range" id="studio-curve" min="10" max="100" step="5" value="65" aria-valuetext="65 percent">
           <div class="studio-style-row">
             <label for="studio-line-style">Line style</label>
-            <select id="studio-line-style"><option value="segments">Segments</option><option value="continuous">Continuous</option><option value="dots">Dots</option></select>
+            <select id="studio-line-style"><option value="continuous">Continuous</option><option value="segments">Segments</option><option value="dots">Dots</option></select>
           </div>
           <div class="studio-actions">
             <button type="button" data-studio-random>Shuffle</button>
+            <button type="button" data-studio-ripple>Ripple</button>
             <button type="button" data-studio-reset>Reset</button>
           </div>
           <p class="sr-only" role="status" data-studio-status></p>
         </div>
         <div class="studio-art" data-studio-art aria-hidden="true">
-          <svg data-studio-svg focusable="false" aria-hidden="true"></svg>
+          <canvas data-studio-canvas></canvas>
         </div>
       </section>
 
@@ -406,8 +411,8 @@
           <div class="portfolio-content">
             <p class="project-meta">Personal website / HTML, CSS, and JavaScript</p>
             <h3>Frontend Portfolio System</h3>
-            <p>Responsive portfolio with project filters, reusable dialogs, course certificates, and CV downloads.</p>
-            <div class="project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive UI</span></div>
+            <p>Responsive portfolio with a generative terrain studio, interactive sketches, project filters, and accessible dialogs.</p>
+            <div class="project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Canvas</span></div>
           </div>
           <button type="button" class="readMore" data-project-modal="portfolio-site" aria-label="View details: Frontend Portfolio System">View Details</button>
         </article>
@@ -429,9 +434,9 @@
             GIS integrations, and release support.
           </p>
           <p>
-            I have extensive experience applying AI tools and models, coordinating coding agents, and
-            automating workflows. I use OpenAI Codex, Claude Code, and Antigravity with structured prompts,
-            shared context, code review, and test-based verification.
+            I build LLM tool-calling agents and coordinate coding agents across implementation, testing,
+            and documentation. I work with OpenAI Codex, Claude Code, and Antigravity through structured
+            prompts, shared context, code review, and test-based verification.
           </p>
           <p>
             My background at the Esri Support Center EMEA connects development with enterprise troubleshooting,
@@ -525,8 +530,13 @@
           <div class="timeline-content">
             <h3>Web Developer</h3>
             <p>
-              Developed responsive interfaces, custom widgets, dashboard views, and REST API integrations
-              for enterprise web and GIS workflows.
+              Developed responsive interfaces and custom ArcGIS Experience Builder widgets, and integrated
+              ArcGIS REST services and external APIs for interactive maps, dashboards, filters, and
+              operational data views.
+            </p>
+            <p>
+              Refactored reusable frontend components and translated client requirements into application
+              features with GIS and implementation teams.
             </p>
             <div class="project-tags">
               <span>React</span>
@@ -546,8 +556,11 @@
               <a href="https://doi.org/10.1109/ASET66891.2025.11427955" target="_blank" rel="noopener noreferrer">
                 Evaluating a Virtual Assistant's Effectiveness in Enhancing in-Vehicle Safety: A Comparative Study
               </a>
-              for ASET 2025 and contributed to a smart city optimization platform using IoT and machine learning
-              concepts.
+              for ASET 2025 and contributed to faculty research, including the UAEU SURE+ program.
+            </p>
+            <p>
+              Designed a smart city optimization platform using IoT and machine learning concepts, ranked
+              among UAEU's Top 10 graduation projects.
             </p>
             <div class="project-tags">
               <span>Research</span>
@@ -620,7 +633,7 @@
         </article>
         <article class="skill-card reveal">
           <h3>AI Tools and Automation</h3>
-          <div class="skill-pills"><span>LLM Tool Calling</span><span>OpenAI Codex</span><span>Claude Code</span><span>Antigravity</span><span>AI Models</span><span>Prompt Engineering</span><span>Context Engineering</span><span>Agent Orchestration</span><span>n8n Prototypes</span><span>Model Context Protocol (MCP)</span></div>
+          <div class="skill-pills"><span>LLM Tool Calling</span><span>OpenAI Codex</span><span>Claude Code</span><span>Antigravity</span><span>Prompt Engineering</span><span>Context Engineering</span><span>Agent Orchestration</span><span>n8n Prototypes</span><span>Model Context Protocol (MCP)</span></div>
           <button class="skill-example" type="button" data-project-modal="ai-workflows">Explore agent workflows <span aria-hidden="true">&rarr;</span></button>
         </article>
         <article class="skill-card reveal">
@@ -645,7 +658,7 @@
       <div class="contact-layout reveal">
         <h3>Let's build reliable web applications.</h3>
         <p>
-          Contact me about full stack development, GIS applications, API integrations, or AI-assisted engineering workflows.
+          Contact me about full stack development, GIS applications, API integrations, or LLM agent and automation work.
         </p>
         <div class="contact-links">
           <a href="mailto:ahmedsalemghaleb@gmail.com">Email Me</a>

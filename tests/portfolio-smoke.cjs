@@ -24,101 +24,136 @@ const { chromium } = require('playwright');
   try {
     await page.goto(base);
     await check('native cursor and project-first structure', async () => {
-      assert.equal(await page.locator('canvas, [data-cursor-ring]').count(), 0);
+      assert.equal(await page.locator('canvas:not([data-studio-canvas]), [data-cursor-ring]').count(), 0);
       assert.notEqual(await page.locator('body').evaluate(el => getComputedStyle(el).cursor), 'none');
       assert.deepEqual(await page.locator('main > section').evaluateAll(els => els.map(el => el.id)), ['home', 'portfolio', 'about', 'experience', 'skills', 'contact']);
     });
     await screenshot('desktop-home');
 
-    await check('full-width artwork reacts locally, settles, and stops rendering while idle', async () => {
+    await check('terrain renders one static frame for reduced motion, then animates, reacts, and pauses off screen', async () => {
       const studio = page.locator('[data-pattern-studio]');
       const field = page.locator('[data-studio-art]');
+      const canvas = field.locator('canvas');
+      const pixels = () => canvas.evaluate(el => el.toDataURL());
+      const state = name => studio.getAttribute(`data-${name}`);
+      const waitForState = (name, value) => page.waitForFunction(([name, value]) => document.querySelector('[data-pattern-studio]').dataset[name] === value, [name, value]);
       assert.equal(await field.getAttribute('aria-hidden'), 'true');
       assert.equal(await field.locator('button, a, [tabindex]').count(), 0);
-      assert.equal(await field.locator('path').count(), 26);
+      assert.equal(await state('pattern'), 'terrain');
+      assert.equal(await state('lines'), '26');
       assert.ok(await field.evaluate(el => el.clientHeight) >= 352);
       assert.ok(await field.evaluate(el => el.clientWidth) > (await page.locator('.hero-copy').evaluate(el => el.clientWidth)) * 1.8);
-      const rest = await field.locator('path').evaluateAll(nodes => nodes.map(node => node.getAttribute('d')));
-      await page.emulateMedia({ reducedMotion: 'no-preference' });
-      await page.waitForFunction(() => document.querySelector('[data-pattern-studio]').dataset.reactive === 'true');
-      await page.evaluate(() => {
-        window.__qaOriginalRAF = window.requestAnimationFrame;
-        window.__qaFrameRequests = 0;
-        window.requestAnimationFrame = callback => { window.__qaFrameRequests += 1; return window.__qaOriginalRAF(callback); };
-      });
-      await field.hover();
-      await page.waitForFunction(() => document.querySelector('[data-pattern-studio]').dataset.interacting === 'true');
-      assert.notDeepEqual(await field.locator('path').evaluateAll(nodes => nodes.map(node => node.getAttribute('d'))), rest);
-      await page.waitForTimeout(1200);
-      const restingFrames = await page.evaluate(() => window.__qaFrameRequests);
+
+      // The context starts with reduced motion: a drawn frame, no loop, and no pointer response.
+      assert.equal(await state('reactive'), 'false');
+      assert.equal(await state('running'), 'false');
+      assert.equal(await canvas.evaluate(el => {
+        const blank = document.createElement('canvas');
+        blank.width = el.width;
+        blank.height = el.height;
+        return el.toDataURL() !== blank.toDataURL();
+      }), true, 'The static frame is drawn');
+      const rest = await pixels();
+      await field.hover({ position: { x: 300, y: 160 } });
       await page.waitForTimeout(250);
-      assert.equal(await page.evaluate(() => window.__qaFrameRequests), restingFrames, 'No permanent animation loop');
-      await screenshot('studio-hover');
-      await page.locator('.hero-copy h1').hover();
-      await page.waitForFunction(() => document.querySelector('[data-pattern-studio]').dataset.interacting === 'false');
-      assert.deepEqual(await field.locator('path').evaluateAll(nodes => nodes.map(node => node.getAttribute('d'))), rest);
-      await page.evaluate(() => { window.requestAnimationFrame = window.__qaOriginalRAF; delete window.__qaOriginalRAF; delete window.__qaFrameRequests; });
-      await field.scrollIntoViewIfNeeded();
+      assert.equal(await pixels(), rest);
+      assert.equal(await state('interacting'), 'false');
+      assert.match(await page.locator('[data-studio-readout]').textContent(), /^Static view/);
       await screenshot('studio-rest');
 
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+      await waitForState('running', 'true');
+      assert.equal(await state('reactive'), 'true');
+      const moving = await pixels();
+      await page.waitForTimeout(400);
+      assert.notEqual(await pixels(), moving, 'The terrain drifts while it is visible');
+      await field.hover({ position: { x: 420, y: 200 } });
+      await waitForState('interacting', 'true');
+      await page.waitForFunction(() => /^Elevation \d+/.test(document.querySelector('[data-studio-readout]').textContent));
+      await screenshot('studio-hover');
+      await field.click({ position: { x: 520, y: 220 } });
+      await waitForState('interacting', 'true');
+      await screenshot('studio-ripple');
+
+      await page.locator('#contact').scrollIntoViewIfNeeded();
+      await waitForState('running', 'false');
+      assert.equal(await state('interacting'), 'false', 'The loop stops and settles off screen');
+      await field.scrollIntoViewIfNeeded();
+      await waitForState('running', 'true');
+
       await page.locator('[data-motion-toggle]').click();
-      await field.hover();
-      assert.equal(await studio.getAttribute('data-reactive'), 'false');
-      assert.equal(await studio.getAttribute('data-interacting'), 'false');
+      await waitForState('running', 'false');
+      assert.equal(await state('reactive'), 'false');
+      await field.hover({ position: { x: 360, y: 180 } });
+      assert.equal(await state('interacting'), 'false');
+      const paused = await pixels();
+      await page.waitForTimeout(250);
+      assert.equal(await pixels(), paused, 'No frames are drawn while motion is off');
       await page.locator('[data-motion-toggle]').click();
-      await field.hover();
-      await page.waitForFunction(() => document.querySelector('[data-pattern-studio]').dataset.interacting === 'true');
+      await field.hover({ position: { x: 380, y: 190 } });
+      await waitForState('running', 'true');
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await page.waitForFunction(() => document.querySelector('[data-pattern-studio]').dataset.reactive === 'false');
-      assert.equal(await studio.getAttribute('data-interacting'), 'false');
+      await waitForState('reactive', 'false');
+      assert.equal(await state('running'), 'false');
+      assert.equal(await state('interacting'), 'false');
     });
 
     await check('pattern controls support keyboard, all presets, live ranges, shuffle, and reset', async () => {
+      const studio = page.locator('[data-pattern-studio]');
       const toggle = page.locator('[data-studio-toggle]');
-      const paths = page.locator('[data-studio-svg] path');
+      const pixels = () => page.locator('[data-studio-canvas]').evaluate(el => el.toDataURL());
+      const state = name => studio.getAttribute(`data-${name}`);
       await toggle.focus();
       await page.keyboard.press('Enter');
       assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
       await page.keyboard.press('Tab');
       assert.equal(await page.locator('[data-studio-close]').evaluate(el => el === document.activeElement), true);
-      for (const pattern of ['orbits', 'waves']) {
-        const before = await paths.first().getAttribute('d');
+      // Reduced motion keeps the canvas static, so each control must change the pixels by itself.
+      for (const [pattern, label] of [['waves', 'Curve strength'], ['orbits', 'Curve strength'], ['terrain', 'Relief']]) {
+        const before = await pixels();
         await page.locator(`[data-studio-pattern="${pattern}"]`).focus();
         await page.keyboard.press('Space');
-        assert.notEqual(await paths.first().getAttribute('d'), before);
+        assert.notEqual(await pixels(), before);
+        assert.equal(await state('pattern'), pattern);
+        assert.equal(await page.locator('[data-studio-curve-label]').textContent(), label);
         assert.equal(await page.locator('[data-studio-pattern][aria-pressed="true"]').count(), 1);
       }
-      for (const palette of ['aurora', 'sunset', 'prism']) {
-        const before = await paths.first().getAttribute('stroke');
+      for (const palette of ['aurora', 'sunset', 'ember', 'prism']) {
+        const before = await pixels();
         await page.locator(`[data-studio-palette="${palette}"]`).click();
-        assert.notEqual(await paths.first().getAttribute('stroke'), before);
+        assert.notEqual(await pixels(), before);
+        assert.equal(await state('palette'), palette);
         assert.equal(await page.locator('[data-studio-palette][aria-pressed="true"]').count(), 1);
       }
       await page.locator('#studio-density').focus();
       await page.keyboard.press('End');
-      assert.equal(await paths.count(), 40);
+      assert.equal(await state('lines'), '40');
       assert.equal(await page.locator('#studio-density').getAttribute('aria-valuetext'), '40 lines');
+      const dense = await pixels();
       await page.keyboard.press('Home');
-      assert.equal(await paths.count(), 12);
-      const beforeCurve = await paths.first().getAttribute('d');
+      assert.equal(await state('lines'), '12');
+      assert.notEqual(await pixels(), dense);
+      const beforeCurve = await pixels();
       await page.locator('#studio-curve').focus();
       await page.keyboard.press('ArrowRight');
       assert.equal(await page.locator('#studio-curve').inputValue(), '70');
-      assert.notEqual(await paths.first().getAttribute('d'), beforeCurve);
-      for (const style of ['continuous', 'dots', 'segments']) {
+      assert.notEqual(await pixels(), beforeCurve);
+      for (const style of ['segments', 'dots', 'continuous']) {
+        const before = await pixels();
         await page.locator('#studio-line-style').selectOption(style);
-        const dash = await paths.first().getAttribute('stroke-dasharray');
-        if (style === 'continuous') assert.equal(dash, null);
-        else assert.match(dash, style === 'dots' ? /^0\.1 / : /^23 /);
+        assert.equal(await state('line-style'), style);
+        assert.notEqual(await pixels(), before);
       }
       await page.locator('[data-studio-random]').click();
       assert.equal(await page.locator('[data-studio-palette="prism"]').getAttribute('aria-pressed'), 'false');
       assert.match(await page.locator('[data-studio-status]').textContent(), /New pattern/);
+      assert.equal(await page.locator('[data-studio-ripple]').isDisabled(), true, 'Ripples need motion');
       await page.locator('[data-studio-reset]').click();
-      assert.equal(await paths.count(), 26);
+      assert.equal(await state('lines'), '26');
+      assert.equal(await state('seed'), '7');
       assert.equal(await page.locator('#studio-curve').inputValue(), '65');
-      assert.equal(await page.locator('#studio-line-style').inputValue(), 'segments');
-      assert.equal(await page.locator('[data-studio-pattern="waves"]').getAttribute('aria-pressed'), 'true');
+      assert.equal(await page.locator('#studio-line-style').inputValue(), 'continuous');
+      assert.equal(await page.locator('[data-studio-pattern="terrain"]').getAttribute('aria-pressed'), 'true');
       assert.equal(await page.locator('[data-studio-palette="prism"]').getAttribute('aria-pressed'), 'true');
       await page.locator('[data-pattern-studio]').scrollIntoViewIfNeeded();
       await screenshot('studio-controls');
@@ -133,7 +168,7 @@ const { chromium } = require('playwright');
       await page.locator('[data-studio-close]').click();
       assert.equal(await toggle.evaluate(el => el === document.activeElement), true);
       await toggle.click();
-      await page.locator('[data-studio-art]').click();
+      await page.locator('[data-studio-art]').click({ position: { x: 80, y: 80 } });
       assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
       await toggle.click();
       await page.locator('[data-studio-pattern="orbits"]').click();
@@ -148,6 +183,14 @@ const { chromium } = require('playwright');
       await page.keyboard.press('Tab');
       assert.equal(await page.locator('.hero-scroll').evaluate(el => el === document.activeElement), true);
       assert.equal(await toggle.getAttribute('aria-expanded'), 'false', 'Leaving the panel closes the disclosure');
+
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+      await toggle.click();
+      await page.locator('[data-studio-ripple]').click();
+      await page.waitForFunction(() => document.querySelector('[data-pattern-studio]').dataset.interacting === 'true');
+      assert.match(await page.locator('[data-studio-status]').textContent(), /Ripple sent/);
+      await page.keyboard.press('Escape');
+      await page.emulateMedia({ reducedMotion: 'reduce' });
     });
 
     await check('inventory filter updates products, request, and summary', async () => {
@@ -240,7 +283,8 @@ const { chromium } = require('playwright');
           await page.setViewportSize({ width, height: 900 });
           await page.waitForFunction(() => {
             const field = document.querySelector('[data-studio-art]');
-            return field.querySelector('svg').viewBox.baseVal.width === field.clientWidth;
+            const ratio = Math.min(window.devicePixelRatio || 1, 2);
+            return field.querySelector('canvas').width === Math.round(field.clientWidth * ratio);
           });
           for (const tab of ['app', 'gis', 'ai']) {
             await page.locator(`#tab-${tab}`).click();
@@ -309,9 +353,10 @@ const { chromium } = require('playwright');
       const touchPage = await touchContext.newPage();
       await touchPage.goto(base);
       await touchPage.emulateMedia({ reducedMotion: 'no-preference' });
-      assert.equal(await touchPage.locator('[data-pattern-studio]').getAttribute('data-reactive'), 'false');
+      await touchPage.waitForFunction(() => document.querySelector('[data-pattern-studio]').dataset.reactive === 'true');
       await touchPage.locator('[data-studio-art]').tap();
-      assert.equal(await touchPage.locator('[data-pattern-studio]').getAttribute('data-interacting'), 'false');
+      await touchPage.waitForFunction(() => document.querySelector('[data-pattern-studio]').dataset.interacting === 'true', null, { timeout: 5000 });
+      assert.match(await touchPage.locator('[data-studio-readout]').textContent(), /^Tap the terrain/);
       await touchPage.locator('[data-studio-toggle]').tap();
       await touchPage.locator('[data-studio-pattern="orbits"]').tap();
       assert.equal(await touchPage.locator('[data-pattern-studio]').getAttribute('data-pattern'), 'orbits');

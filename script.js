@@ -2,9 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuIcon = document.querySelector(".menu-icon");
   const navlist = document.querySelector(".navlist");
   const overlay = document.querySelector("[data-menu-close]");
-  const aboutButtons = document.querySelectorAll(".about-btn button");
-  const aboutContents = document.querySelectorAll(".content");
-  const scrollProgress = document.getElementById("progress");
   const menuLinks = document.querySelectorAll("header nav a");
   const sections = document.querySelectorAll("main section[id]");
   const documentElement = document.documentElement;
@@ -392,16 +389,18 @@ document.addEventListener("DOMContentLoaded", () => {
       "category": "Web",
       "title": "Frontend Portfolio System",
       "summary": [
-        "Built and maintained this portfolio using HTML, CSS, and JavaScript, with responsive layouts, theme switching, project filters, and reusable project dialogs.",
+        "Built and maintained this portfolio using HTML, CSS, and JavaScript, with no framework or external library. It combines responsive layouts, theme switching, project filters, and reusable project dialogs.",
         "Project details, course certificates, and PDF and Word CV downloads share one page."
       ],
       "sections": [
         {
           "title": "Features",
           "items": [
-            "Responsive navigation, keyboard-accessible project dialogs, and saved theme preferences.",
+            "Pattern studio drawn on canvas. Marching squares trace contour lines over a seeded noise field, with shaded relief, spot heights, and ripples that follow the pointer, a click, or a tap.",
+            "Animation pauses off screen and stops for reduced-motion preferences, leaving one static frame.",
+            "Responsive navigation, keyboard-accessible project dialogs, and saved theme and motion preferences.",
             "Project filters for full stack development, frontend, GIS, AI, testing, support, and research.",
-            "Updated professional history, customer feedback excerpts, and training certificates."
+            "Playwright smoke tests for the demos, filters, dialogs, and responsive layouts."
           ]
         }
       ],
@@ -416,8 +415,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "HTML",
         "CSS",
         "JavaScript",
-        "Responsive UI",
-        "Portfolio"
+        "Canvas",
+        "Playwright"
       ]
     }
   };
@@ -529,27 +528,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch {
         return;
       }
-    });
-  };
-
-  const setupAboutTabs = () => {
-    if (!aboutButtons.length || !aboutContents.length) return;
-
-    aboutButtons.forEach((button, index) => {
-      button.addEventListener("click", () => {
-        aboutButtons.forEach((btn) => {
-          btn.classList.remove("active");
-          btn.setAttribute("aria-selected", "false");
-        });
-
-        aboutContents.forEach((content) => {
-          content.classList.remove("active");
-        });
-
-        button.classList.add("active");
-        button.setAttribute("aria-selected", "true");
-        aboutContents[index]?.classList.add("active");
-      });
     });
   };
 
@@ -749,19 +727,18 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
 
-  const updateHeader = () => {
-    header?.classList.toggle("is-scrolled", window.scrollY > 24);
-  };
+  // Featured cards carry a soft highlight that follows a mouse or pen.
+  const setupCardSpotlight = () => {
+    if (!portfolioGallery) return;
 
-  const updateScrollProgress = () => {
-    if (!scrollProgress) return;
-
-    const pos = documentElement.scrollTop;
-    const calcHeight = documentElement.scrollHeight - documentElement.clientHeight;
-    const scrollValue = calcHeight > 0 ? Math.round((pos * 100) / calcHeight) : 0;
-
-    scrollProgress.style.display = pos > 100 ? "grid" : "none";
-    scrollProgress.style.background = `conic-gradient(var(--accent-text) ${scrollValue}%, var(--line-soft) ${scrollValue}%)`;
+    portfolioGallery.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch") return;
+      const card = event.target.closest(".portfolio-box.is-featured");
+      if (!card) return;
+      const bounds = card.getBoundingClientRect();
+      card.style.setProperty("--spot-x", `${event.clientX - bounds.left}px`);
+      card.style.setProperty("--spot-y", `${event.clientY - bounds.top}px`);
+    }, { passive: true });
   };
 
   const updateActiveMenu = () => {
@@ -789,19 +766,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     scrollTicking = true;
     window.requestAnimationFrame(() => {
-      updateHeader();
-      updateScrollProgress();
       updateActiveMenu();
       scrollTicking = false;
-    });
-  };
-
-  const setupScrollToTop = () => {
-    if (!scrollProgress) return;
-
-    scrollProgress.addEventListener("click", () => {
-      const reduceMotion = documentElement.dataset.motion === "off" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      window.scrollTo({ top: 0, behavior: reduceMotion ? "instant" : "smooth" });
     });
   };
 
@@ -837,13 +803,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setupThemeToggle();
   setupMenu();
-  setupAboutTabs();
   setupPortfolioFilter();
   setupProjectModal();
-  setupScrollToTop();
+  setupCardSpotlight();
   setupReveal();
-  updateHeader();
-  updateScrollProgress();
   updateActiveMenu();
 
   window.addEventListener("scroll", onScroll, { passive: true });
