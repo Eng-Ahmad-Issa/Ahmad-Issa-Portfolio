@@ -212,7 +212,7 @@ const { chromium } = require('playwright');
     });
 
     await check('all nine project filters match their category counts', async () => {
-      const expected = { all: 12, software: 2, web: 6, gis: 5, desktop: 1, ai: 1, testing: 1, support: 1, research: 3 };
+      const expected = { all: 13, software: 2, web: 7, gis: 6, desktop: 1, ai: 2, testing: 1, support: 1, research: 3 };
       for (const [filter, count] of Object.entries(expected)) {
         await page.locator(`[data-filter="${filter}"]`).click();
         assert.equal(await page.locator('.portfolio-box:visible').count(), count, filter);
@@ -223,7 +223,7 @@ const { chromium } = require('playwright');
       await screenshot('desktop-projects');
     });
 
-    await check('all twelve original project dialogs still open', async () => {
+    await check('all thirteen project dialogs open', async () => {
       for (const card of await page.locator('.portfolio-box').all()) {
         const title = await card.locator('h3').textContent();
         await card.locator('[data-project-modal]').click();

@@ -16,6 +16,7 @@
 - Earlier experience: Researcher at United Arab Emirates University, Jun 2022-Sep 2024.
 - Portfolio and CV direction: Full Stack Developer as the sole main title. Show GIS development, AI tools, agent coordination, automation, and Esri support within the content.
 - The retail and inventory application is a personal project under development.
+- The AI assistant for ArcGIS Experience Builder is a gistec proof of concept (Oct-Nov 2026), not a production system. It extends an open-source Apache-2.0 widget from 8 to 27 tools, and its interface follows a designer's prototype. The local run on 2026-11-10 passed 312 Jest tests. Keep the client unnamed and use sketches, not screenshots, unless gistec approves otherwise.
 - Customer feedback supports multiple Excellent CSAT survey ratings, with no aggregate percentage or exact total established.
 - The six supplied Esri credentials are course and lab completion certificates, not professional certification exams.
 

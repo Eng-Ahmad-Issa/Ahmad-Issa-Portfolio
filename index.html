@@ -247,12 +247,39 @@
         <button class="button" type="button" data-filter="support" aria-pressed="false">Support</button>
         <button class="button" type="button" data-filter="research" aria-pressed="false">Research</button>
       </div>
-      <p class="filter-status" id="project-filter-status" role="status" aria-live="polite">Showing all 12 projects.</p>
+      <p class="filter-status" id="project-filter-status" role="status" aria-live="polite">Showing all 13 projects.</p>
 
       <div class="portfolio-gallery" id="project-gallery" aria-describedby="project-filter-status">
-        <article class="portfolio-box is-featured reveal" data-category="software web">
-          <div class="project-visual visual-retail" aria-hidden="true"><span class="visual-label">01 / Full stack</span><div class="visual-stack"><span>React <i>interface</i></span><span>NestJS <i>API</i></span><span>PostgreSQL <i>data</i></span></div><span class="visual-footnote">Architecture sketch</span></div>
+        <article class="portfolio-box is-featured is-lead reveal" data-category="ai gis web">
+          <div class="project-visual visual-agent" aria-hidden="true">
+            <span class="visual-label">01 / AI agent on the map</span>
+            <div class="agent-sketch">
+              <p class="agent-prompt"><span>ask</span>Industrial land, about 130,000 m&sup2;</p>
+              <svg viewBox="0 0 320 132" focusable="false">
+                <path class="agent-parcel" d="M8 10h64v36H8zM72 10h52v36H72zM124 10h70v36h-70zM194 10h54v36h-54zM248 10h64v36h-64zM8 46h44v40H8zM52 46h72v40H52zM124 46h44v40h-44zM168 46h80v40h-80zM248 46h64v40h-64zM8 86h64v36H8zM72 86h52v36H72zM124 86h70v36h-70zM194 86h54v36h-54zM248 86h64v36h-64z" />
+                <path class="agent-single" d="M168 46h80v40h-80z" />
+                <path class="agent-site" d="M8 46h44v40H8zM52 46h72v40H52z" />
+                <path class="agent-site" d="M194 86h54v36h-54zM248 86h64v36h-64z" />
+                <text class="agent-num" x="52" y="70" text-anchor="middle">1</text>
+                <text class="agent-num" x="248" y="108" text-anchor="middle">2</text>
+              </svg>
+              <p class="agent-legend"><span class="is-single"><i></i>Fits as one plot</span><span class="is-site"><i></i>Adjacent plots that add up</span></p>
+            </div>
+            <span class="visual-footnote">Result sketch, sample layout</span>
+          </div>
           <span class="portfolio-index">01</span>
+          <div class="portfolio-content">
+            <p class="project-meta">gistec proof of concept / Oct to Nov 2026</p>
+            <h3>AI Assistant for ArcGIS Experience Builder</h3>
+            <p>An LLM agent inside a custom Experience Builder widget. Questions in English or Arabic become plot searches, buffers, and charts on the map, across about 240,000 land plots.</p>
+            <div class="project-tags"><span>React</span><span>TypeScript</span><span>Experience Builder</span><span>ArcGIS Maps SDK</span><span>LLM tool calling</span></div>
+          </div>
+          <button type="button" class="readMore" data-project-modal="exb-ai-agent" aria-label="View details: AI Assistant for ArcGIS Experience Builder">View Details</button>
+        </article>
+
+        <article class="portfolio-box is-featured reveal" data-category="software web">
+          <div class="project-visual visual-retail" aria-hidden="true"><span class="visual-label">02 / Full stack</span><div class="visual-stack"><span>React <i>interface</i></span><span>NestJS <i>API</i></span><span>PostgreSQL <i>data</i></span></div><span class="visual-footnote">Architecture sketch</span></div>
+          <span class="portfolio-index">02</span>
           <div class="portfolio-content">
             <p class="project-meta">Personal project / Under development</p>
             <h3>Retail and Inventory Application</h3>
@@ -263,8 +290,8 @@
         </article>
 
         <article class="portfolio-box is-featured reveal" data-category="software web gis">
-          <div class="project-visual visual-audit" aria-hidden="true"><span class="visual-label">02 / Connected systems</span><div class="visual-events"><span><i></i>Webhook received</span><span><i></i>Event deduplicated</span><span><i></i>Activity recorded</span></div><span class="visual-footnote">Workflow sketch</span></div>
-          <span class="portfolio-index">02</span>
+          <div class="project-visual visual-audit" aria-hidden="true"><span class="visual-label">03 / Connected systems</span><div class="visual-events"><span><i></i>Webhook received</span><span><i></i>Event deduplicated</span><span><i></i>Activity recorded</span></div><span class="visual-footnote">Workflow sketch</span></div>
+          <span class="portfolio-index">03</span>
           <div class="portfolio-content">
             <p class="project-meta">Client team project / Development deployment</p>
             <h3>Audit and Activity Console</h3>
@@ -275,8 +302,8 @@
         </article>
 
         <article class="portfolio-box is-featured reveal" data-category="web testing">
-          <div class="project-visual visual-testing" aria-hidden="true"><span class="visual-label">03 / Engineering quality</span><div class="visual-test-number">458<span>passing tests</span></div><div class="visual-test-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="visual-footnote">Recorded local run</span></div>
-          <span class="portfolio-index">03</span>
+          <div class="project-visual visual-testing" aria-hidden="true"><span class="visual-label">04 / Engineering quality</span><div class="visual-test-number">458<span>passing tests</span></div><div class="visual-test-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="visual-footnote">Recorded local run</span></div>
+          <span class="portfolio-index">04</span>
           <div class="portfolio-content">
             <p class="project-meta">Client team project / Recorded local test results</p>
             <h3>React Application Test Suite</h3>
@@ -287,7 +314,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="desktop gis">
-          <span class="portfolio-index">04</span>
+          <span class="portfolio-index">05</span>
           <div class="portfolio-content">
             <p class="project-meta">Client application / Maintenance and installer delivery</p>
             <h3>Asset Management Desktop Application</h3>
@@ -298,7 +325,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="gis web">
-          <span class="portfolio-index">05</span>
+          <span class="portfolio-index">06</span>
           <div class="portfolio-content">
             <p class="project-meta">Client applications / Feature delivery and maintenance</p>
             <h3>ArcGIS Experience Builder Workflows</h3>
@@ -309,7 +336,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="web">
-          <span class="portfolio-index">06</span>
+          <span class="portfolio-index">07</span>
           <div class="portfolio-content">
             <p class="project-meta">Internal tool / Sep 2026</p>
             <h3>Company Intelligence Portal</h3>
@@ -320,7 +347,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="ai">
-          <span class="portfolio-index">07</span>
+          <span class="portfolio-index">08</span>
           <div class="portfolio-content">
             <p class="project-meta">Engineering workflows / Automation prototypes</p>
             <h3>AI Agent Workflows and Automation</h3>
@@ -331,7 +358,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="support gis">
-          <span class="portfolio-index">08</span>
+          <span class="portfolio-index">09</span>
           <div class="portfolio-content">
             <p class="project-meta">gistec / Esri Support Center EMEA / Sep 2025 to Apr 2026</p>
             <h3>Esri Support and Platform Diagnostics</h3>
@@ -342,7 +369,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="research">
-          <span class="portfolio-index">09</span>
+          <span class="portfolio-index">10</span>
           <div class="portfolio-content">
             <p class="project-meta">Academic research / IEEE ASET 2025</p>
             <h3>Evaluating a Virtual Assistant&#x27;s Effectiveness in Enhancing in-Vehicle Safety: A Comparative Study</h3>
@@ -353,7 +380,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="research gis">
-          <span class="portfolio-index">10</span>
+          <span class="portfolio-index">11</span>
           <div class="portfolio-content">
             <p class="project-meta">University graduation project / Top 10 at UAEU</p>
             <h3>Smart City Optimization Platform</h3>
@@ -364,7 +391,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="research">
-          <span class="portfolio-index">11</span>
+          <span class="portfolio-index">12</span>
           <div class="portfolio-content">
             <p class="project-meta">Academic prototype / Embedded systems</p>
             <h3>Autonomous Smart Car Robot</h3>
@@ -375,7 +402,7 @@
         </article>
 
         <article class="portfolio-box reveal" data-category="web">
-          <span class="portfolio-index">12</span>
+          <span class="portfolio-index">13</span>
           <div class="portfolio-content">
             <p class="project-meta">Personal website / HTML, CSS, and JavaScript</p>
             <h3>Frontend Portfolio System</h3>
@@ -452,7 +479,7 @@
             <h3>Full Stack Developer</h3>
             <p>
               Develop React and TypeScript applications, ASP.NET Core APIs, SQL Server workflows, and
-              custom ArcGIS widgets. Recent work includes a bilingual audit console, C#/.NET desktop
+              custom ArcGIS widgets. Recent work includes a bilingual audit console, an LLM agent for ArcGIS Experience Builder, C#/.NET desktop
               improvements, application security assessments, and release verification.
             </p>
             <p>
@@ -593,7 +620,7 @@
         </article>
         <article class="skill-card reveal">
           <h3>AI Tools and Automation</h3>
-          <div class="skill-pills"><span>OpenAI Codex</span><span>Claude Code</span><span>Antigravity</span><span>AI Models</span><span>Prompt Engineering</span><span>Context Engineering</span><span>Agent Orchestration</span><span>n8n Prototypes</span><span>Model Context Protocol (MCP)</span></div>
+          <div class="skill-pills"><span>LLM Tool Calling</span><span>OpenAI Codex</span><span>Claude Code</span><span>Antigravity</span><span>AI Models</span><span>Prompt Engineering</span><span>Context Engineering</span><span>Agent Orchestration</span><span>n8n Prototypes</span><span>Model Context Protocol (MCP)</span></div>
           <button class="skill-example" type="button" data-project-modal="ai-workflows">Explore agent workflows <span aria-hidden="true">&rarr;</span></button>
         </article>
         <article class="skill-card reveal">

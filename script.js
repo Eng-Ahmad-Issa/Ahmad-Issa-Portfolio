@@ -26,6 +26,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeStorageKey = "ahmad-issa-theme";
 
   const projectDetails = {
+    "exb-ai-agent": {
+      "category": "gistec proof of concept / Oct to Nov 2026",
+      "title": "AI Assistant for ArcGIS Experience Builder",
+      "summary": [
+        "Built an LLM agent inside a custom ArcGIS Experience Builder widget. A user asks in English or Arabic, the model selects a tool, and the widget runs it against ArcGIS feature services and draws the answer on the map with supporting charts.",
+        "The proof of concept covers a land-investment scenario with about 240,000 plots. It extends an open-source Experience Builder AI widget (Apache-2.0) from 8 to 27 tools and follows a designer's interface prototype."
+      ],
+      "sections": [
+        {
+          "title": "Contributions",
+          "items": [
+            "Kept queries and figures in the widget. The model returns structured arguments, and each tool validates them against the live layer schema before querying the services and computing statistics.",
+            "Implemented a search that returns single plots of a requested area and groups of adjacent plots that add up to it, using a shared-border test.",
+            "Linked charts to the map, so they recalculate for the selected place and the current map extent.",
+            "Added code-level guards against repeated questions and searches on an empty brief, and handled simple commands without a model call.",
+            "Supported Arabic and English conversation, including Arabic place-name lookup and parsing of areas and distances from free text.",
+            "Expanded the Jest suite to 312 tests and kept service URLs, fields, and wording in the application configuration."
+          ]
+        },
+        {
+          "title": "Scope",
+          "items": [
+            "Proof of concept on an internal demo deployment. It is not a production system."
+          ]
+        }
+      ],
+      "tags": [
+        "React",
+        "TypeScript",
+        "Experience Builder",
+        "ArcGIS Maps SDK for JavaScript",
+        "LLM tool calling",
+        "Jest"
+      ]
+    },
     "retail-inventory": {
       "category": "Personal project / 2025 to 2026",
       "title": "Retail and Inventory Application",
